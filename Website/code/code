@@ -1,0 +1,7062 @@
+
+
+2012-05-09 09:22                    about.php                     Page 1
+
+
+<?php
+include '../template/header.php';
+?>
+
+	<div id="content">
+    	<div id="about">
+		<h1>About Us</h1>
+<p>	We are the highly motivated, highly dedicated San Jose State Students.
+We are experts and professionals. Disciplined, physically and mentally tough.
+Trained and proficient in our coupon selling skills.</p>
+		<h1>Contact Us</h1>
+			<p>sunshinewonderkids@gmail.com</p>
+	</div>
+    	</div>
+<?php
+include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                   addCart.php                    Page 1
+
+
+<?php
+
+	include("connection.php");
+	include '../template/header.php';
+?>
+<div id="content">
+<div id="contact">
+<p>
+<?php
+	$coupId = $_REQUEST['coupId'];	
+	$acctId = $_REQUEST['acctId'];
+	$today = date('Y-m-d H:i:s'); 	
+
+	$query = "SELECT * FROM CART WHERE CART_COUP_ID = $coupId AND CART_ACCT_ID = $acctId";
+	$result = mysql_query($query) or die(mysql_error());
+	if(mysql_num_rows($result) != 0){
+		echo "Your coupon already exist and has been incremented.";
+		mysql_query("UPDATE CART SET CART_QUAN=CART_QUAN+1 WHERE CART_ACCT_ID=$acctId AND CART_COUP_ID=$coupId") or die(mysql_error());
+		mysql_query("UPDATE COUPONS SET COUP_LEFT=COUP_LEFT-1 WHERE COUP_ID=$coupId") or die(mysql_error());	
+	}else{
+		echo "Your item has been added to your shopping cart.";
+		mysql_query("INSERT INTO CART (CART_ACCT_ID, CART_COUP_ID, CART_QUAN, CART_DATE) VALUES ('$acctId', '$coupId', '1', '$today')") or die(mysql_error());
+		mysql_query("UPDATE COUPONS SET COUP_LEFT=COUP_LEFT-1 WHERE COUP_ID=$coupId") or die(mysql_error());	
+	}
+
+	
+	
+	include("close.php");
+
+?>
+</p>
+</div>
+</div>
+<script>
+window.setTimeout(function(){window.location = "http://sunshine.engr.sjsu.edu/pages/shoppingCart.php?acctId=<?php echo $acctId; ?>";}, 2000);
+</script>
+
+<?php
+        include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                   checkOut.php                   Page 1
+
+
+<?php
+	include '../template/header.php';
+?>
+
+<div id="content">
+<div id="contact" class="no-margin-input">
+
+		<h1>Billing Information</h1>
+		<?php include("connection.php"); 
+			$acctId = $_REQUEST['acctId'];
+			$subTotal = $_REQUEST['subTotal'];
+		?>	
+				
+					<form action = "processCheckOut.php">
+					Name: <input type="text" name="bName" /> (As is on card)</br>
+					Address: <input type="text" name="bAddress" /></br>
+					City: <input type="text" name="bCity" /></br>
+					State: <input type="text" name="bState" /></br>
+					Zip Code: <input type="text" name="bZip" /></br>
+					Card Number: <input type="text" name="bNumber" /></br>
+					Security Code: <input type="text" name="bCode" /></br>
+					Expiration Date: 
+					Month: <select name="month">
+						<option value="1">January</option>
+						<option value="2">February</option>
+						<option value="3">March</option>
+						<option value="4">April</option>
+						<option value="5">May</option>
+						<option value="6">June</option>
+						<option value="7">July</option>
+						<option value="8">August</option>
+						<option value="9">September</option>
+						<option value="10">October</option>
+						<option value="11">November</option>
+						<option value="12">December</option>
+					</select>
+					Year: <select name="year">
+						<option value="2012">2012</option>
+						<option value="2013">2013</option>
+						<option value="2014">2014</option>
+						<option value="2015">2015</option>
+					</select>
+					<input type="hidden" name="acctId" value="<?php echo $acctId ?>" />
+					<input type="hidden" name="subTotal" value="<?php echo $subTotal ?>" />
+					
+					<input type="submit" />
+					</form>
+
+
+
+			<?php include("close.php"); ?>	
+	</div>
+</div>
+<?php
+	include '../template/footer.php';
+?>	
+
+
+
+
+
+
+
+2012-05-09 09:22                    close.php                     Page 1
+
+
+<?
+	mysql_close($db);
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                  connection.php                  Page 1
+
+
+<?
+	$comp = "localhost";
+	$user = "shinetheweb";
+	$pwd = "urmysunshine";
+	
+	$db = mysql_connect($comp, $user, $pwd);
+	mysql_select_db("sunshinedeals");
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                   contact.php                    Page 1
+
+
+<?php
+	include '../template/header.php';
+?>
+
+<div id="content">
+<div id="contact">
+	<h1>Contact Us</h1>
+	<p>sunshinewonderkids@gmail.com</p>
+</div>
+</div>
+<?php
+	include '../template/footer.php'; 
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                 couponTable.php                  Page 1
+
+
+<?php
+        include('../template/header.php');
+?>
+<div id="content">
+<div id="cart">
+<h2>Coupon Table</h2>
+
+
+<?php
+include("connection.php");
+
+$result = "SELECT * FROM COUPONS";
+
+
+if(isset($_REQUEST['sort'])){
+switch ($_REQUEST['sort'])
+{
+case 'id':
+  $result .= " ORDER BY COUP_ID";
+  break;
+case 'title':
+  $result .= " ORDER BY COUP_NAME";
+  break;
+case 'total':
+  $result .= " ORDER BY COUP_TOTAL";
+  break;
+case 'left':
+  $result .= " ORDER BY COUP_LEFT";
+  break;
+ case 'price':
+  $result .= " ORDER BY COUP_PRICE";
+  break;
+case 'category':
+  $result .= " ORDER BY COUP_CATNAME";
+  break;  
+case 'vendor':
+  $result .= " ORDER BY COUP_VENDOR";
+  break;
+case 'desc':
+  $result .= " ORDER BY COUP_DESC";
+  break;
+case 'start':
+  $result .= " ORDER BY COUP_START";
+  break;  
+case 'end':
+  $result .= " ORDER BY COUP_EXPR";
+  break;  
+default:
+
+}
+}else{
+	$result .= " ORDER BY COUP_ID";
+}
+
+
+//echo $result;
+
+
+
+
+
+
+
+2012-05-09 09:22                 couponTable.php                  Page 2
+
+
+	
+$result = mysql_query($result) or die(mysql_error());
+
+
+$acctId = 0;
+if(isset($_REQUEST['acctId'])){
+ $acctId = $_REQUEST['acctId'];
+}
+
+echo"
+<table border='1'>
+<tr align = left>
+<th><a href='couponTable.php?sort=title&acctId=$acctId'>Title</a></th>";
+echo "
+<th><a href='couponTable.php?sort=category&acctId=$acctId'>Category</a></th>
+<th><a href='couponTable.php?sort=desc&acctId=$acctId'>Description</a></th>
+<th><a href='couponTable.php?sort=left&acctId=$acctId'>Left</a></th>
+<th><a href='couponTable.php?sort=price&acctId=$acctId'>Price</a></th>
+<th></th>
+</tr>";
+
+while($row = mysql_fetch_array($result))
+  {
+  if($row['COUP_LEFT']==0){
+  
+  }else{
+  $coupId = $row['COUP_ID'];
+  echo "<tr>";
+  if(isset($_SESSION['current_user'])){
+    $coupUrl = "viewCoupon.php?coupId=$coupId";
+  }
+  else{
+    $coupUrl = "viewCoupon.php?coupId=$coupId";
+  }
+  echo '<td><a href="'.$coupUrl.'"><div class="crop"><img name="myimage" src="'.$row['COUP_IMGLOC'].'" width="60" height="60" alt="image" /></div>'.$row['COUP_NAME'].'</a></td>';
+  echo "<td>" . $row['COUP_CATNAME'] . "</td>";
+  echo "<td>" . $row['COUP_DESC'] . "</td>";
+  echo "<td>" . $row['COUP_LEFT'] . "</td>";
+  echo "<td>$" . $row['COUP_PRICE'] . "</td>";
+  if(isset($_SESSION['current_user']) && $_SESSION['acctType'] != 1){
+    $url = "addCart.php?coupId=$coupId&acctId=$acctId";
+  }
+  else{
+    $url = "login.php";
+  }
+  echo "<td><a href='". $url ."'>Add</a></td>";
+  echo "</tr>";
+  }
+  }
+	
+	echo "</table>";
+include("connection.php");
+?>  
+</div>
+</div>
+<?php
+
+
+
+
+
+
+
+2012-05-09 09:22                 couponTable.php                  Page 3
+
+
+	include('../template/footer.php');
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                 createCoupon.php                 Page 1
+
+
+<?php
+	include '../template/header.php';
+?>
+
+<div id="content">
+<div style="margin: 0 auto;width:500px;">
+<h1>Create Coupon</h1>
+<?php
+include("connection.php");
+
+	$acctId = $_REQUEST['acctId'];
+	
+$query = "SELECT * FROM ACCOUNTS WHERE ACCT_ID = $acctId";
+$results = mysql_query($query) or die(mysql_error());
+
+$row = mysql_fetch_array($results);
+$name = $row['ACCT_NAME'];
+?>
+
+<form action = "processCoupon.php">
+Create New Coupon</br>
+Title: <input type="text" name="title" /></br>
+Vendor's Name: <?php echo $name; ?></br>
+<input type="hidden" name="vName" value="<?php echo $name ?>"  /> 
+Quantity: <input type="text" name="quantity" size="3"/></br>
+Price: <input type="text" name="price" size="5"/></br>
+Category:
+<select name="category">
+<option value="Food">Food</option>
+<option value="Health">Health</option>
+<option value="Clothes">Clothes</option>
+<option value="Entertainment">Entertainment</option>
+</select></br>
+Start:</br>
+Month: <select name="sMonth">
+<option value="1">January</option>
+<option value="2">February</option>
+<option value="3">March</option>
+<option value="4">April</option>
+<option value="5">May</option>
+<option value="6">June</option>
+<option value="7">July</option>
+<option value="8">August</option>
+<option value="9">September</option>
+<option value="10">October</option>
+<option value="11">November</option>
+<option value="12">December</option>
+</select>
+Day: <select name="sDay">
+<?php
+for($i=1;$i<32;$i++)
+{
+print "<option value='$i'>$i</option>";
+}
+?>
+</select> 
+
+
+
+
+
+
+
+2012-05-09 09:22                 createCoupon.php                 Page 2
+
+
+Year: <select name="sYear">
+<option value="2012">2012</option>
+<option value="2013">2013</option>
+<option value="2014">2014</option>
+<option value="2015">2015</option>
+</select> 
+Time: <input type="text" name="sHour" size="1"/>:<input type="text" name="sMinute" size="3"/></br>
+Expiration:</br>
+Month: <select name="month">
+<option value="1">January</option>
+<option value="2">February</option>
+<option value="3">March</option>
+<option value="4">April</option>
+<option value="5">May</option>
+<option value="6">June</option>
+<option value="7">July</option>
+<option value="8">August</option>
+<option value="9">September</option>
+<option value="10">October</option>
+<option value="11">November</option>
+<option value="12">December</option>
+</select>
+Day: <select name="day">
+<?php
+for($i=1;$i<32;$i++)
+{
+print "<option value='$i'>$i</option>";
+}
+?>
+</select> 
+Year: <select name="year">
+<option value="2012">2012</option>
+<option value="2013">2013</option>
+<option value="2014">2014</option>
+<option value="2015">2015</option>
+</select> 
+Time: <input type="text" name="hour" size="1"/>:<input type="text" name="minute" size="3"/></br> 
+Description: </br><textarea name="description" cols="40" rows="5">
+</textarea></br>
+Image URL: <input type="text" name="url" /></br>
+
+<input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /> 
+	
+<input class="button" type="submit" />
+</form>
+</div>
+</div>
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22              db_logUser.mobile.php               Page 1
+
+
+<?php  
+        include '../templates/headerPages.php';
+?>
+<div id="content">
+<script type="text/javascript">
+        setTimeout(function() {
+                window.location.href = '../';
+        }, 7000);
+</script>
+
+<?php
+	mysql_connect('localhost', 'shinetheweb', 'urmysunshine') or die ("There's a problem with the connection");
+	mysql_select_db('sunshinedeals');
+
+	$errors = "";
+	
+	if(!strchr($_POST['luser'],'@'))
+        	$errors .= "Please provide a valid email address.</br>";
+	if(!isset($_POST['lpwd']))
+                $errors .= "Please provide a password.</br>";   	
+	if($errors == ""){
+		$email = trim($_POST['luser']);
+		$pass = trim($_POST['lpwd']);
+	        $encrypted = sha1(md5($pass));
+
+		$sql = "SELECT * FROM ACCOUNTS WHERE ACCT_EMAIL = '$email'";
+
+		$check = mysql_query($sql) or die (mysql_error());	
+		$check2 = mysql_num_rows($check);
+
+		if ($check2 == 0) 
+ 			die('That user does not exist in our database. <a href=register.php>Click Here to Register</a>');
+		
+		while($info = mysql_fetch_array($check)) {
+			$encrypted = stripslashes($encrypted);
+ 			$info['ACCT_PASS'] = stripslashes($info['ACCT_PASS']);
+
+ 			if ($encrypted != $info['ACCT_PASS']) {
+				echo "<div id='contact'>";
+				echo "<h1>Login Failed</h1>";
+				echo "<p>";
+				echo "Incorrect email or password, please try again.";
+ 				echo "</p>";
+				echo "</div>";
+			}
+			else{
+				session_start();
+				$_SESSION['current_user'] = "1";
+				$test = $_SESSION['current_user'];
+				if(isset($_SESSION['views']))
+					$_SESSION['views']=$_SESSION['views']+1;
+				else
+					$_SESSION['views']=1;
+                                echo "<div id='contact'>";
+                                echo "<h1>Login Successful!</h1>";
+                                echo "<p>";
+
+
+
+
+
+
+
+2012-05-09 09:22              db_logUser.mobile.php               Page 2
+
+
+                                echo "Login succesful!</br></br> Redirecting to member page in 7 seconds.";
+                                echo "</p>";
+                                echo "</div>";
+			}
+		}
+	}
+	else{
+                echo "<div id='contact'>";
+                echo "<h1>Login Failed</h1>";
+                echo "<p>";
+                echo $errors;
+                echo "</br><b>Please go back and try again.</b>";
+                echo "</p>";
+                echo "</div>";
+	}	
+?>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                  db_logUser.php                  Page 1
+
+
+<?php  
+        include '../template/header.php';
+?>
+<div id="content">
+<?php
+	mysql_connect('localhost', 'shinetheweb', 'urmysunshine') or die ("There's a problem with the connection");
+	mysql_select_db('sunshinedeals');
+
+	$errors = "";
+	
+	if(!strchr($_POST['luser'],'@'))
+        	$errors .= "Please provide a valid email address.</br>";
+	if(!isset($_POST['lpwd']))
+                $errors .= "Please provide a password.</br>";   	
+	if($errors == ""){
+		$email = trim($_POST['luser']);
+		$pass = trim($_POST['lpwd']);
+	        $encrypted = sha1(md5($pass));
+
+		$sql = "SELECT * FROM ACCOUNTS WHERE ACCT_EMAIL = '$email'";
+
+		$check = mysql_query($sql) or die (mysql_error());	
+		$check2 = mysql_num_rows($check);
+
+		if ($check2 == 0) 
+ 			die('That user does not exist in our database. <a href=register.php>Click Here to Register</a>');
+		
+		while($info = mysql_fetch_array($check)) {
+			$encrypted = stripslashes($encrypted);
+ 			$info['ACCT_PASS'] = stripslashes($info['ACCT_PASS']);
+
+ 			if ($encrypted != $info['ACCT_PASS']) {
+				echo "<div id='contact'>";
+				echo "<h1>Login Failed</h1>";
+				echo "<p>";
+				echo "Incorrect email or password, please try again.";
+ 				echo "</p>";
+				echo "</div>";
+			}
+			else{
+				$row = mysql_fetch_array($check);
+				session_start();
+				$_SESSION['current_user'] =  $info['ACCT_ID'];
+				$_SESSION['acctType'] = $info['ACCT_TYPE'];
+				if(isset($_SESSION['views']))
+					$_SESSION['views']=$_SESSION['views']+1;
+				else
+					$_SESSION['views']=1;
+                                echo "<div id='contact'>";
+                                echo "<h1>Login Successful!</h1>";
+                                echo "<p>";
+                                echo "Login succesful!</br></br> Redirecting to home page in 7 seconds.";
+                                echo "</p>";
+                                echo "</div>";
+				echo "<script type='text/javascript'>";
+    				echo "window.location = '/index.php';";
+
+
+
+
+
+
+
+2012-05-09 09:22                  db_logUser.php                  Page 2
+
+
+				echo "</script>";
+			}
+		}
+	}
+	else{
+                echo "<div id='contact'>";
+                echo "<h1>Login Failed</h1>";
+                echo "<p>";
+                echo $errors;
+                echo "</br><b>Please go back and try again.</b>";
+                echo "</p>";
+                echo "</div>";
+	}	
+?>
+</div>
+</div>
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22              db_regUser.mobile.php               Page 1
+
+
+<?php 
+	include '../templates/headerPages.php';
+?>
+
+<script type="text/javascript">
+	setTimeout(function() {
+    		window.location.href = '../';
+	}, 7000);
+</script>
+
+<?php
+
+mysql_connect('localhost', 'shinetheweb', 'urmysunshine') or die ("There's a problem with the connection");
+mysql_select_db('sunshinedeals');
+
+$errors = "";
+
+if(!isset($_POST['ruser']))
+	$errors .= "Please provide a username.</br>";
+if(!isset($_POST['rpwd']))
+	$errors .= "Please provide a password.</br>";
+if(!isset($_POST['email']))
+	$errors .= "Please provide a email address.</br>";
+if(!isset($_POST['squest']))
+	$errors .= "Please provide a secret question.</br>";
+if(!isset($_POST['sanser']))
+	$errors .= "Please provide a secret answer.</br>";
+if(!strchr($_POST['email'],'@'))
+	$errors .= "Please provide a valid email address.</br>";
+if($errors == ""){
+	$username = trim($_POST['ruser']);
+	$password = trim($_POST['rpwd']);
+	$email = trim($_POST['email']);
+	$squest = trim($_POST['squest']);
+	$sanser = trim($_POST['sanser']);
+	$userRole = $_POST['role'];
+
+	$sql = "INSERT INTO ACCOUNTS (ACCT_NAME, ACCT_PASS, ACCT_EMAIL, ACCT_SQUEST, ACCT_SANSER, ACCT_TYPE) VALUES ('$username', SHA1(MD5('$password')), '$email', '$squest', SHA1(MD5('$sanser')), '$userRole')";
+
+	mysql_query($sql) or die (mysql_error());
+	echo "<div id='content'>";
+	echo "<div id='register'>";
+        echo "<h1>Registration Success</h1>";
+        echo "<p>Please login and enjoy~!</br></br> You will automatically be redirected to the main page in 7 seconds.</p>";
+	echo "</div>";
+	echo "</div>";
+	}
+	else{
+		echo "<div id='content'>";
+		echo "<div id='contact'>";
+		echo "<h1>Registration Failed</h1>";
+		echo "<p>";
+		echo $errors;
+		echo "</br><b>Please go back and try again.</b>";
+		echo "</p>";
+		echo "</div>";
+
+
+
+
+
+
+
+2012-05-09 09:22              db_regUser.mobile.php               Page 2
+
+
+		echo "</div>";
+	}
+	
+?>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                  db_regUser.php                  Page 1
+
+
+<?php 
+	include '../template/header.php';
+?>
+
+<script type="text/javascript">
+	setTimeout(function() {
+    		window.location.href = '../../';
+	}, 7000);
+</script>
+
+<?php
+
+mysql_connect('localhost', 'shinetheweb', 'urmysunshine') or die ("There's a problem with the connection");
+mysql_select_db('sunshinedeals');
+
+$errors = "";
+
+if(!isset($_POST['ruser']))
+	$errors .= "Please provide a username.</br>";
+if(!isset($_POST['rpwd']))
+	$errors .= "Please provide a password.</br>";
+if(!isset($_POST['email']))
+	$errors .= "Please provide a email address.</br>";
+if(!isset($_POST['squest']))
+	$errors .= "Please provide a secret question.</br>";
+if(!isset($_POST['sanser']))
+	$errors .= "Please provide a secret answer.</br>";
+if(!strchr($_POST['email'],'@'))
+	$errors .= "Please provide a valid email address.</br>";
+if($errors == ""){
+	$username = trim($_POST['ruser']);
+	$password = trim($_POST['rpwd']);
+	$email = trim($_POST['email']);
+	$squest = trim($_POST['squest']);
+	$sanser = trim($_POST['sanser']);
+	$userRole = $_POST['role'];
+
+	$sql = "INSERT INTO ACCOUNTS (ACCT_NAME, ACCT_PASS, ACCT_EMAIL, ACCT_SQUEST, ACCT_SANSER, ACCT_TYPE) VALUES ('$username', SHA1(MD5('$password')), '$email', '$squest', SHA1(MD5('$sanser')), '$userRole')";
+
+	mysql_query($sql) or die (mysql_error());
+	echo "<div id='content'>";
+	echo "<div id='contact'>";
+        echo "<h1>Registration Success</h1>";
+        echo "<p>Please login and enjoy~!</br></br> You will automatically be redirected to the main page in 7 seconds.</p>";
+	echo "</div>";
+	echo "</div>";
+	}
+	else{
+		echo "<div id='content'>";
+		echo "<div id='contact'>";
+		echo "<h1>Registration Failed</h1>";
+		echo "<p>";
+		echo $errors;
+		echo "</br><b>Please go back and try again.</b>";
+		echo "</p>";
+		echo "</div>";
+
+
+
+
+
+
+
+2012-05-09 09:22                  db_regUser.php                  Page 2
+
+
+		echo "</div>";
+	}
+	
+?>
+
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22              delete.footerPages.php              Page 1
+
+
+<?php
+echo '<footer>';
+echo '<div><nav><ul>';
+echo '<a href="/pages/about.php"><li>About Us</li></a>';
+echo '<a href="couponTable.php"><li>Browse</li></a>';
+if(!isset($_SESSION['current_user'])){
+echo '<a href="login.php"><li>Login</li></a>';
+echo '<a href="register.php"><li>Register</li></a>';
+}
+elseif($_SESSION['current_user'] == nil){
+echo '<a href="login.php"><li>Login</li></a>';
+echo '<a href="register.php"><li>Register</li></a>';
+}
+elseif($_SESSION['current_user'] >= 0){
+        if($_SESSION['acctType'] == 1){
+		echo '<a href="couponTable.php"><li>Browse</li></a>';
+                echo "<a href='createCoupon.php?acctId=".$_SESSION['current_user']."'><li>Create Coupon</li></a>
+                <a href='inventory.php?acctId=".$_SESSION['current_user']."'><li>Inventory</li></a>
+                <a href='transaction.php?acctId=".$_SESSION['current_user']."'><li>Transactions</li></a>
+                <a href='/pages/editAccount.php'><li>Settings</li></a>
+                <!--<a href='editAccount.php?acctId=".$_SESSION['current_user']."'><li>Edit Account</li></a>-->";
+        }
+        else{
+                echo"<a href='couponTable.php?acctId=".$_SESSION['current_user']."'><li>Search</li></a>
+                <a href='shoppingCart.php?acctId=".$_SESSION['current_user']."'><li>Shopping Cart</li></a>
+                <a href='purchaseHistory.php?acctId=".$_SESSION['current_user']."'><li>Purchase History</li></a>
+                <a href='/pages/editAccount.php'><li>Settings</li></a>
+                <!--<a href='editAccount.php?acctId=".$_SESSION['current_user']."'><li>Edit Account</li></a>-->";
+        }
+	echo "<a href='logout.php'><li>Logout</li></a>";
+}
+
+echo '</ul></nav></div>';
+echo '<a href="http://play.google.com/store/apps/details?id=com.sunshinewonderkids.sunshinedeals">
+  <img alt="Get it on Google Play"
+       src="http://www.android.com/images/brand/get_it_on_play_logo_small.png" />
+</a>';
+echo '<img src="../images/app-store_coming-soon.png"/>';
+echo '<span> </span><img src="../images/wp7_marketplace.png"/>';
+echo '<span> </span><img src="../images/palm-app-store.png"/>';
+echo '<span> </span><img src="../images/bb-appworld.png"/>';
+echo '</footer></body></html>';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22              delete.headerPages.php              Page 1
+
+
+<?php
+session_start();
+echo '<html lang="en">';
+echo '<head>';
+echo '<meta charset="utf-8" />';
+echo '<title>Sunshine Deals</title>';
+echo '<link href="../styles/style.css" rel="stylesheet" type="text/css">';
+echo '<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script><script src="../jquery.countdown1.2.js" type="text/javascript"></script>';
+echo '<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->';
+echo '</head>';
+echo '<body>';
+echo '<header>';
+echo '<a href="../"><img src="../images/logo.png" alt="Sunshine Deals"></a>';
+echo '<nav>';
+echo '<ul>';
+echo '<a href="/pages/searchform.php"><li>Search</li></a>';
+if(!isset($_SESSION['current_user'])){
+echo '<a href="login.php"><li>Login</li></a>';
+echo '<a href="register.php"><li>Register</li></a>';
+echo '<a href="couponTable.php"><li>Browse</li></a>';
+}
+elseif($_SESSION['current_user'] == nil){
+echo '<a href="login.php"><li>Login</li></a>';
+echo '<a href="register.php"><li>Register</li></a>';
+echo '<a href="couponTable.php"><li>Browse</li></a>';
+}
+elseif($_SESSION['current_user'] >= 0){
+        if($_SESSION['acctType'] == 1){
+                echo "<a href='couponTable.php?acctId=".$_SESSION['current_user']."'><li>Browse</li></a><a href='createCoupon.php?acctId=".$_SESSION['current_user']."'><li>Create Coupon</li></a>
+                <a href='inventory.php?acctId=".$_SESSION['current_user']."'><li>Inventory</li></a>
+                <a href='purchaseHistory.php?acctId=".$_SESSION['current_user']."'><li>Transactions</li></a>
+                <a href='/pages/editAccount.php'><li>Settings</li></a>
+		<!--<a href='editAccount.php?acctId=".$_SESSION['current_user']."'><li>Edit Account</li></a>-->";
+        }
+        else{
+                echo"<a href='couponTable.php?acctId=".$_SESSION['current_user']."'><li>Browse</li></a>
+                <a href='shoppingCart.php?acctId=".$_SESSION['current_user']."'><li>Shopping Cart</li></a>
+                <a href='purchaseHistory.php?acctId=".$_SESSION['current_user']."'><li>Purchase History</li></a>
+		<a href='/pages/editAccount.php'><li>Settings</li></a>
+                <!--<a href='editAccount.php?acctId=".$_SESSION['current_user']."'><li>Edit Account</li></a>-->";
+        }
+	echo "<a href='logout.php'><li>Logout</li></a>";
+}
+echo '</ul>';
+echo '</nav>';
+echo '</header>';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                 editAccount.php                  Page 1
+
+
+<?php
+	include '../template/header.php';
+?>
+
+<div id="content">
+<div class="no-margin-input" id="contact">
+
+<?php
+include("connection.php");
+
+$acctId = $_SESSION['current_user'];
+
+$query = "SELECT * FROM ACCOUNTS WHERE ACCT_ID = $acctId";
+$result = mysql_query($query);
+$row = mysql_fetch_array($result);
+?>
+
+<form action = "updateAccount.php">
+E-mail: <input type="text" name="email" value="<?php print $row["ACCT_EMAIL"] ?>" /></br>
+Current Password: <input type="password" name="currentPwd" /></br>
+New Password: <input type="password" name="pwdA" /></br>
+Confirm New Password: <input type="password" name="pwdB"  /></br>
+
+New Security Question: <input type="text" name="question" value="<?php print $row["ACCT_SQUEST"] ?>" /></br>
+New Security Answer: <input type="password" name="answer" value="<?php print $row["ACCT_SANSER"] ?>" /></br>
+
+<input type="hidden" name="acctId" value="<?php echo $acctId ?>" />
+<input type="submit" value="Submit" />
+</form>
+
+
+
+
+<?php
+include("close.php");
+?>
+
+</div>
+</div>
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                  editCoupon.php                  Page 1
+
+
+<?php
+	include('../template/header.php');
+?>
+<div id="content">
+<div style="margin: 0 auto 30px; width: 500px;">
+<form action = "updateCoupon.php">
+<?php
+include("connection.php");
+$coupId = $_REQUEST['coupId'];
+$acctId = $_REQUEST['acctId'];
+
+
+
+$query = "SELECT * FROM COUPONS WHERE COUP_ID = $coupId";
+$result = mysql_query($query) or die(mysql_error());
+$row = mysql_fetch_array($result) or die(mysql_error());
+$start = date("F", strtotime($row['COUP_START']));
+$vendor = $row['COUP_VENDOR'];
+?>
+<h1>Edit Coupon</h1>
+Create New Coupon</br>
+Title: <input type="text" name="title" value="<?php print $row["COUP_NAME"] ?>" /></br>
+Quantity: <input type="text" name="quantity" size="3"/ value=<?php print $row['COUP_TOTAL']?> ></br>
+Price: <input type="text" name="price" size="5" value=<?php print $row['COUP_PRICE']?> /></br>
+Category:
+<select name="category" value=<?php print $row['COUP_CATNAME']?> >
+<option value="Food">Food</option>
+<option value="Health">Health</option>
+<option value="Clothes">Clothes</option>
+<option value="Entertainment">Entertainment</option>
+</select></br>
+Start:</br>
+<?php
+
+//echo $start;
+?>
+Month: <select name="sMonth">
+	<option value="1">January</option>
+	<option value="2" >February</option>
+	<option value="3">March</option>
+	<option value="4">April</option>
+	<option value="5">May</option>
+	<option value="6">June</option>
+	<option value="7">July</option>
+	<option value="8">August</option>
+	<option value="9">September</option>
+	<option value="10">October</option>
+	<option value="11">November</option>
+	<option value="12">December</option>
+</select>
+Day: <select name="sDay">
+<?php
+for($i=1;$i<32;$i++)
+{
+print "<option value='$i'>$i</option>";
+}
+
+
+
+
+
+
+
+2012-05-09 09:22                  editCoupon.php                  Page 2
+
+
+?>
+</select> 
+Year: <select name="sYear">
+<option value="2012">2012</option>
+<option value="2013">2013</option>
+<option value="2014">2014</option>
+<option value="2015">2015</option>
+</select> 
+Time: <input type="text" name="sHour" size="1"/>:<input type="text" name="sMinute" size="3"/></br>
+Expiration:</br>
+Month: <select name="month">
+<option value="1">January</option>
+<option value="2">February</option>
+<option value="3">March</option>
+<option value="4">April</option>
+<option value="5">May</option>
+<option value="6">June</option>
+<option value="7">July</option>
+<option value="8">August</option>
+<option value="9">September</option>
+<option value="10">October</option>
+<option value="11">November</option>
+<option value="12">December</option>
+</select>
+Day: <select name="day">
+<?php
+for($i=1;$i<32;$i++)
+{
+print "<option value='$i'>$i</option>";
+}
+?>
+</select> 
+Year: <select name="year">
+<option value="2012">2012</option>
+<option value="2013">2013</option>
+<option value="2014">2014</option>
+<option value="2015">2015</option>
+</select> 
+Time: <input type="text" name="hour" size="1"/>:<input type="text" name="minute" size="3"/></br> 
+Description: </br><textarea name="description" cols="40" rows="5" ><?php print $row['COUP_DESC']?>
+</textarea></br>
+Image URL: <input type="text" name="url" value="<?php print $row['COUP_IMGLOC']?>"/></br>
+
+<input type="hidden" name="vName" value="<?php echo $vendor ?>"  /> 
+<input type="hidden" name="coupId" value="<?php echo $coupId ?>"  /> 
+<input type="hidden" name="acctId" value="<?php echo $acctId ?>" />
+<input type="hidden" name="left" value="<?php echo $row['COUP_LEFT'] ?>" />
+
+<input type="submit" />
+<?php
+include("close.php");
+?>
+</form>
+</div>
+</div>
+<?php
+
+
+
+
+
+
+
+2012-05-09 09:22                  editCoupon.php                  Page 3
+
+
+	include('../template/header.php');
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                 editQuantity.php                 Page 1
+
+
+<?php
+	include '../template/header.php';
+?>
+<div id="content">
+<div id="quantity">
+<h1>Edit Quantity</h1>
+<?php
+include("connection.php");
+
+$coupId = $_REQUEST['coupId'];
+$acctId = $_REQUEST['acctId'];
+
+$query = "SELECT * FROM COUPONS WHERE COUP_ID = $coupId";
+$result = mysql_query($query) or die(mysql_error());
+$row = mysql_fetch_array($result) or die (mysql_error());
+$couponTableTotal = $row['COUP_TOTAL'];
+$couponTableLeft = $row['COUP_LEFT'];
+$couponImage = $row['COUP_IMGLOC'];
+$couponName = $row['COUP_NAME'];
+$query = "SELECT * FROM CART WHERE CART_ACCT_ID = $acctId AND CART_COUP_ID = $coupId";
+$result = mysql_query($query) or die(mysql_error());
+$row = mysql_fetch_array($result) or die (mysql_error());
+$customerQuantity = $row['CART_QUAN'];
+
+echo "<p><div class='crop'><img src='$couponImage'/></div>$couponName</p>";
+echo "<form action = 'updateQuantity.php'>";
+echo "Quantity:<select name = 'quantity'>";
+for($i=0;$i<=$couponTableLeft+$customerQuantity;$i++)
+{
+	if($i==$customerQuantity){
+		echo "<option selected='selected' value='$i'>$i</option>";
+	}else{
+		echo "<option value='$i'>$i</option>";
+	}
+}
+echo "</select>"; 
+
+//$nestQuery = "SELECT * FROM COUPONS WHERE COUP.id IN(SELECT CART_COUP_ID FROM CART WHERE CART_ACCT_ID = $id))";
+//$query = "SELECT * FROM COUPONS WHERE COUP_ID = $coupId";
+//$result = mysql_query($query) or die(mysql_error());
+//$row = mysql_fetch_array($result) or die(mysql_error());
+
+
+//$vendor = $row['COUP_VENDOR'];
+//echo $row['COUP_LEFT'];
+?>
+<p>Set quantity to 0 to delete from Shopping Cart.</p>
+
+<input type="hidden" name="coupId" value="<?php echo $coupId ?>"  /> 
+<input type="hidden" name="acctId" value="<?php echo $acctId ?>" />
+
+<input class="button" type="submit" />
+</form>
+<?php
+include("close.php");
+?>
+
+
+
+
+
+
+
+2012-05-09 09:22                 editQuantity.php                 Page 2
+
+
+</div>
+</div>
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22              footerPages.mobile.php              Page 1
+
+
+<?php
+echo '<footer>';
+echo '<a href="http://play.google.com/store/apps/details?id=com.sunshinewonderkids.sunshinedeals">
+  <img alt="Get it on Google Play"
+       src="http://www.android.com/images/brand/get_it_on_play_logo_small.png" />
+</a>';
+echo '<img src="../../images/app-store_coming-soon.png"/>';
+echo '<nav><ul><a href="about.php"><li>About</li></a><a href="contact.php"><li>Contact Us</li></a>';
+echo '<a href="../../pages/testShoppingCart.php"><li>Shopping Cart (5)</li></a>';
+echo '<a href="../../pages/couponTable.php"><li>Browse Coupons</li></a>';
+echo '</ul></nav></footer></body></html>';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                    footer.php                    Page 1
+
+
+<?php
+echo '<footer>';
+echo '<div><ul><nav>';
+echo '<a href="/pages/about.php"><li>About Us</li></a>';
+echo "<a href='/pages/searchform.php'><li>Search</li></a>";
+if(!isset($_SESSION['current_user'])){
+echo '<a href="/pages/login.php"><li>Login</li></a>';
+echo '<a href="/pages/register.php"><li>Register</li></a>';
+echo '<a href="/pages/couponTable.php"><li>Browse</li></a>';
+}
+elseif($_SESSION['current_user'] >= 0){
+	echo '<a href="/pages/couponTable.php"><li>Browse</li></a>';
+        if($_SESSION['acctType'] == 1){
+                echo "<a href='/pages/createCoupon.php?acctId=".$_SESSION['current_user']."'><li>Create Coupon</li></a>";
+                echo "<a href='/pages/inventory.php?acctId=".$_SESSION['current_user']."'><li>Inventory</li></a>";
+                echo "<a href='/pages/purchaseHistory.php?acctId=".$_SESSION['current_user']."'><li>Transactions</li></a>";
+		echo "<a href='/pages/editAccount.php'><li>Settings</li></a>";
+        }
+        else{
+                echo"<a href='/pages/shoppingCart.php?acctId=".$_SESSION['current_user']."'><li>Shopping Cart</li></a>";
+                echo "<a href='/pages/purchaseHistory.php?acctId=".$_SESSION['current_user']."'><li>Purchase History</li></a>";
+		echo "<a href='/pages/editAccount.php'><li>Settings</li></a>";
+        }
+	echo "<a href='/pages/logout.php'><li>Logout</li></a>";
+}
+echo '</ul></nav></div>';
+echo '<a href="http://play.google.com/store/apps/details?id=com.sunshinewonderkids.sunshinedeals">
+  <img alt="Get it on Google Play"
+       src="http://www.android.com/images/brand/get_it_on_play_logo_small.png" />
+</a>';
+echo '<img src="../images/app-store_coming-soon.png"/>';
+echo '<span> </span><img src="../images/wp7_marketplace.png"/>';
+echo '<span> </span><img src="../images/palm-app-store.png"/>';
+echo '<span> </span><img src="../images/bb-appworld.png"/>';
+echo '</footer></body></html>';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                header.mobile.php                 Page 1
+
+
+<?php 
+	echo '<html>';
+	echo '<head>';
+	echo '<meta name="viewport" content="width=320; user-scalable=no" />';
+    	echo '<meta http-equiv="Content-type" content="text/html; charset=utf-8">';
+    	echo '<title>Sunshine Deals</title>';
+    	echo '<link href="../style/style.css" rel="stylesheet" type="text/css">';
+    	echo '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>';
+    	echo '<script src="../../jquery.countdown1.2.js" type="text/javascript"></script>';
+	echo '</head>';
+    	echo '<body>';
+	echo '<center><a href="#"><img src="../../images/logo.png" alt="Sunshine Deals"></a></center>';
+	echo '</br>';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22              headerPages.mobile.php              Page 1
+
+
+<?php
+echo '<html lang="en">';
+echo '<head>';
+echo '<meta charset="utf-8" />';
+echo '<title>Sunshine Deals</title>';
+echo '<link href="../style/style.css" rel="stylesheet" type="text/css">';
+echo '<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script><script src="../jquery.countdown1.2.js" type="text/javascript"></script>';
+echo '</head>';
+echo '<body>';
+echo '<center><a href="../"><img src="../images/logo.png" alt="Sunshine Deals"></a>';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                    header.php                    Page 1
+
+
+<?php
+session_start();
+include("connection.php");
+echo '<!DOCTYPE html>';
+echo '<html lang="en">';
+echo '<head>';
+echo '<meta charset="utf-8" />';
+echo '<title>Sunshine Deals</title>';
+echo '<link href="/styles/style.css" rel="stylesheet" type="text/css">';
+echo '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>';
+echo '<script src="jquery.countdown1.2.js" type="text/javascript"></script>';
+echo '<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->';
+echo '</head>';
+echo '<body>';
+echo '<header>';
+echo '<a href="/"><img src="/images/logo.png" alt="Sunshine Deals"></a>';
+echo '<nav>';
+echo '<ul>';
+echo "<a href='/pages/searchform.php'><li>Search</li></a>";
+if(!isset($_SESSION['current_user'])){
+	echo '<a href="/pages/couponTable.php"><li>Browse</li></a>';
+	echo '<a href="/pages/register.php"><li>Register</li></a>';
+	echo '<a href="/pages/login.php"><li>Login</li></a>';
+}
+elseif($_SESSION['current_user'] >= 0){
+	if($_SESSION['acctType'] == 1){
+		echo "<a href='/pages/couponTable.php?acctId=".$_SESSION['current_user']."'><li>Browse</li></a>";
+		echo"<a href='/pages/createCoupon.php?acctId=".$_SESSION['current_user']."'><li>Create Coupon</li></a>";
+		echo "<a href='/pages/inventory.php?acctId=".$_SESSION['current_user']."'><li>Inventory</li></a>";
+		echo "<a href='/pages/purchaseHistory.php?acctId=".$_SESSION['current_user']."'><li>Transactions</li></a>";
+		echo "<a href='/pages/editAccount.php'><li>Settings</li></a>";
+	}
+	else{
+		echo"<a href='/pages/couponTable.php?acctId=".$_SESSION['current_user']."'><li>Browse</li></a>";
+		echo "<a href='/pages/couponTable.php?acctId=".$_SESSION['current_user']."'><li>Search</li></a>";
+		echo "<a href='/pages/shoppingCart.php?acctId=".$_SESSION['current_user']."'><li>Cart</li></a>";
+		echo "<a href='/pages/purchaseHistory.php?acctId=".$_SESSION['current_user']."'><li>Purchase History</li></a>";
+		echo "<a href='/pages/settings.php'><li>Settings</li></a>";
+	}
+	echo "<a href='/pages/logout.php'><li>Logout</li></a>";
+}
+echo '</ul>';
+echo '</nav>';
+echo '</header>';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                    index3.php                    Page 1
+
+
+<?php
+	include 'template/header.php';
+?>
+	<div id="content">
+    	<article>
+            <div id="coupon-image" class="crop">
+                <img src="images/spa.jpg" alt="Spa Coupon" />
+            </div>
+            <div id="coupon-description">
+                <h1>Flourishing Florist</h1>
+                <p>We are committed to offering only the finest floral arrangements and gifts, backed by service that is friendly and prompt. Because all of our customers are important, our professional staff is dedicated to making your experience a pleasant one. That is why we always go the extra mile to make your floral gift perfect.</p>
+            </div>
+            <div id="coupon-pricing">
+                <h1>$150</h1>
+                <a class="button" href="#">Buy</a>
+                <ul>
+                    <li><h3>$400</h3>Value</li>
+                    <li><h3>62%</h3>Discount</li>
+                    <li><h3>$250</h3>You Save</li>
+                </ul>
+                <h2 id="time">3 days <span>4:15:32</span></h2>
+                <h3>Time Left to Buy</h3>
+                <script>
+                    $('#time').countdown({date: new Date(2012, 4-1, 29)});
+                </script>
+            </div>
+    	</article>
+    	<aside>
+    	    <div id="sponsored-deal">
+    	        <h3>Go on a great trip to a beach</h3>
+    	    </div>
+    	    <div id="sponsored-deal-link">
+    	        <a href="#">See the deal now →</a>
+    	    </div>
+    	    <h2>More Deals</h2>
+    	    <ul id="more-deals">
+    	        <li>
+    	           <div class="crop">
+    	               <img src="images/rockClimbing.jpg" alt="Rock Climbing" />
+    	            </div>
+    	            Rock Climbing - $20
+    	        </li>
+    	        <li>
+    	            <div class="crop">
+     	               <img src="images/sailing.jpg" alt="Sailing" />
+     	            </div>
+     	            Sailing - $30
+    	        </li>
+    	        <li>
+    	           <div class="crop">
+    	               <img src="images/rockClimbing.jpg" alt="Rock Climbing" />
+    	            </div>
+    	            Rock Climbing - $20
+    	        </li>
+    	    </ul>
+    	</aside>
+
+
+
+
+
+
+
+2012-05-09 09:22                    index3.php                    Page 2
+
+
+    </div>
+<?php
+	include 'template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                  index.blog.php                  Page 1
+
+
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><title>Sunshine Deals</title><link href="../styles/style.css" rel="stylesheet" type="text/css"><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script></head><body><header><a href="/"><img src="../images/logo.png" alt="Sunshine Deals"/></a></header>
+	<div id="content">
+    	<article>
+            <div id="coupon-image" class="crop">
+                <img src="../images/spa.jpg" alt="Spa Coupon" />
+            </div>
+            <div id="coupon-description">
+                <h1>Mobile App Dev Update</h1>
+		<p>We are commited to offering the best services to our users. So we are proud to announce that we have deployed mobile apps for our services on to the Android and iOS platforms. As for the other major mobile platforms, we have prototypes underway for Blackberry OS, WebOS, and Windows Phone 7. See screenshots below and give us some feedback at <script type="text/javascript" language="JavaScript"> 
+                    &lt;!-- 
+                var prefix = '&amp;#109;a' + 'i&amp;#108;' + '&amp;#116;o'; 
+                var path = 'hr' + 'ef' + '='; 
+                var addy82825 = '&amp;#97;sksc&amp;#101;' + '&amp;#64;' + 'gm&amp;#97;&amp;#105;l' + '&amp;#46;' + 'c&amp;#111;m'; 
+                document.write( '&lt;a ' + path + '\'' + prefix + ':' + addy82825 + '\'&gt;' ); 
+                document.write( addy82825 ); 
+                document.write( '&lt;\/a&gt;' ); 
+                //--&gt; 
+            </script><a href="mailto:sunshinewonderkids@gmail.com"><u>sunshinewonderkids@gmail.com</u></a> </p>
+            <noscript> 
+            This email address is being protected from spam bots, you need JavaScript enabled to view it or by visiting us in E294. 
+            </noscript> 
+	    </div>
+    	</article>
+    	<aside>
+    	    <div id="sponsored-deal">
+    	        <h3>Development Progress</h3>
+    	    </div>
+    	    <div id="sponsored-deal-link">
+    	        <a href="#">Read now →</a>
+    	    </div>
+    	    <h2>Old Entries</h2>
+    	    <ul id="more-deals">
+    	    </ul>
+    	</aside>
+    </div>
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                 index.mobile.php                 Page 1
+
+
+<html>
+	<head>
+		<meta name="viewport" content="width=320; user-scalable=no" />
+    		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    		<title>Sunshine Deals</title>
+    		<link href="style/style.css" rel="stylesheet" type="text/css">
+    		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    		<script src="../jquery.countdown1.2.js" type="text/javascript"></script>
+	</head>
+    	<body>
+		<center><a href="#"><img src="../images/logo.png" alt="Sunshine Deals"></a></center>
+		</br>
+		<?php
+			session_start();
+			if($_SESSION['views'] == 0)
+				echo "<center><a href='pages/login.php' class='btn large'>Login</a></center>";
+			else
+				echo "<center><a href='pages/logout.php' class='btn large'>Logout</a></center>";
+		?>
+		<center><a href="pages/register.php" class="btn large"w>Register</a></center>
+	</body>	
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                    index.php                     Page 1
+
+
+<?php
+	include 'template/header.php';
+	include("pages/connection.php");
+
+$coupId = $_REQUEST['coupId'];
+
+$random = rand(1,5);
+$query = "SELECT * FROM COUPONS WHERE COUP_ID = $random";
+$result = mysql_query($query) or die(mysql_error());
+$row = mysql_fetch_array($result) or die(mysql_error());
+
+?>
+	<div id="content">
+    	<article>
+    	<div id="coupon-image" class="crop">
+                <img src="<?php echo $row['COUP_IMGLOC']; ?>" alt="<?php echo $row['COUP_NAME']; ?> Coupon" />
+            </div>
+            <div id="coupon-description">
+                <h1><?php echo $row['COUP_NAME']; ?></h1>
+                <p><?php echo $row['COUP_DESC']; ?></p>
+            </div>
+            <div id="coupon-pricing">
+                <h1>$<?php echo $row['COUP_PRICE']; ?></h1>
+                <?php if(isset($_SESSION['current_user']) && $_SESSION['acctType'] != 1){ echo "<a class='button' href='/pages/addCart.php?coupId=$random&acctId=".$_SESSION['current_user']."'>Buy</a>"; }else{?>
+                <a class="button" href="pages/login.php">Buy</a>
+                <?php } ?>
+                <ul>
+                    <li><h3><?php echo $row['COUP_LEFT']; ?></h3>Remain</li>
+                </ul>
+                <h2 id="time">3 days <span>4:15:32</span></h2>
+                <h3>Time Left to Buy</h3>
+                <?php
+                        $tempArray = explode("-",$row['COUP_EXPR']);
+                        $dayArray = explode(" ", $tempArray[2]);
+                        $timeArray = explode(":", $dayArray[1]);
+                ?>
+                <script>
+                    $('#time').countdown({date: new Date(<?php echo $tempArray[0]; ?>, <?php echo $tempArray[1]; ?>-1, <?php echo $dayArray[0]; ?>,<?php echo $timeArray[0]; ?>, <?php echo $timeArray[1]; ?>, <?php echo $timeArray[2]; ?>)});
+                </script>
+            
+	    </div>
+	<div style="clear:both;"></div>
+	<div id="disqus_thread"></div>
+	    </article>
+	<?php
+		include 'template/sponsoredDeals.php';
+	?>    
+</div>
+<?php
+	include 'template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                  inventory.php                   Page 1
+
+
+<?php
+	include '../template/header.php';
+?>
+<div id="content">
+<div id="cart">
+<h1>Inventory</h1>
+
+
+<?php
+include("connection.php");
+
+$acctId = $_REQUEST['acctId'];
+
+$query = "SELECT *
+FROM COUPONS
+LEFT JOIN ACCOUNTS ON ACCOUNTS.ACCT_NAME = COUPONS.COUP_VENDOR
+WHERE ACCOUNTS.ACCT_ID = $acctId";
+
+if(isset($_REQUEST['sort'])){
+switch ($_REQUEST['sort'])
+{
+case 'id':
+$query .= " ORDER BY COUPONS.COUP_ID";
+break;
+case 'title':
+$query .= " ORDER BY COUPONS.COUP_NAME";
+break;
+case 'total':
+$query .= " ORDER BY COUPONS.COUP_TOTAL";
+break;
+case 'left':
+$query .= " ORDER BY COUPONS.COUP_LEFT";
+break;
+case 'price':
+$query .= " ORDER BY COUPONS.COUP_PRICE";
+break;
+case 'category':
+$query .= " ORDER BY COUPONS.COUP_CATNAME";
+break;  
+case 'vendor':
+$query .= " ORDER BY COUPONS.COUP_VENDOR";
+break;
+case 'desc':
+$query .= " ORDER BY COUPONS.COUP_DESC";
+break;
+case 'start':
+$query .= " ORDER BY COUPONS.COUP_START";
+break;  
+case 'end':
+$query .= " ORDER BY COUPONS.COUP_EXPR";
+break;  
+default:
+
+}
+}else{
+$query .= " ORDER BY COUPONS.COUP_ID";
+
+
+
+
+
+
+
+2012-05-09 09:22                  inventory.php                   Page 2
+
+
+}
+//echo $result;
+
+$result = mysql_query($query) or die(mysql_error());
+
+echo"
+<table border='1'>
+<tr align = left>
+<th>IMG</a></th>
+<th><a href='inventory.php?sort=id&acctId=$acctId'>ID</a></th>
+<th><a href='inventory.php?sort=title&acctId=$acctId'>Title</a></th>
+<th><a href='inventory.php?sort=total&acctId=$acctId'>Quantity</a></th>
+<th><a href='inventory.php?sort=left&acctId=$acctId'>Left</a></th>
+<th><a href='inventory.php?sort=price&acctId=$acctId'>Price</a></th>
+<th><a href='inventory.php?sort=category&acctId=$acctId'>Category</a></th>
+<th><a href='inventory.php?sort=vendor&acctId=$acctId'>Vendor</a></th>
+<th><a href='inventory.php?sort=desc&acctId=$acctId'>Description</a></th>
+<th><a href='inventory.php?sort=start&acctId=$acctId'>Start Date</a></th>
+<th><a href='inventory.php?sort=end&acctId=$acctId'>End Date</a></th>
+</tr>";
+
+while($row = mysql_fetch_array($result))
+{
+$coupId = $row['COUP_ID'];
+echo "<tr>";
+echo '<td><img name="myimage" src="'.$row['COUP_IMGLOC'].'" width="60" height="60" alt="image" /></td>';
+echo "<td><a href='editCoupon.php?coupId=$coupId&acctId=$acctId'>" . $row['COUP_ID'] . "</a></td>";
+echo "<td>" . $row['COUP_NAME'] . "</td>";
+echo "<td>" . $row['COUP_TOTAL'] . "</td>";
+echo "<td>" . $row['COUP_LEFT'] . "</td>";
+echo "<td>" . $row['COUP_PRICE'] . "</td>";
+echo "<td>" . $row['COUP_CATNAME'] . "</td>";
+echo "<td>" . $row['COUP_VENDOR'] . "</td>";
+echo "<td>" . $row['COUP_DESC'] . "</td>";
+echo "<td>" . $row['COUP_START'] . "</td>";
+echo "<td>" . $row['COUP_EXPR'] . "</td>";
+echo "</tr>";
+}
+
+echo "</table>";
+include("connection.php");
+?>
+
+
+
+</div>
+</div>
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22              jquery.countdown1.2.js              Page 1
+
+
+/*! 
+* jQuery Countdown Timer 1.2 Plugin
+* Copyright 2011 Tom Ellis http://www.webmuse.co.uk
+* Licensed under MIT License
+* See http://www.webmuse.co.uk/license/
+*/
+(function($) {
+   
+	$.fn.countdown = function( options ) {  
+	
+		var defaults = {
+				date: new Date(),
+				updateTime: 1000,
+				htmlTemplate: "<h2>%{d} <span class=\"cd-time\">Days</span> %{h}:%{m}:%{s}</h2>",
+				minus: false,
+				onChange: null,
+				onComplete: null,
+				leadingZero: true
+			},
+			opts = {},
+			rDate = /(%\{d\}|%\{h\}|%\{m\}|%\{s\})/g,
+			rDays = /%\{d\}/,
+			rMonths = /%\{mo\}/,
+			rHours = /%\{h\}/,
+			rMins = /%\{m\}/,
+			rSecs = /%\{s\}/,
+			complete = false,
+			template,
+			floor = Math.floor,
+			onChange = null,
+			onComplete = null;
+		   
+		$.extend( opts, defaults, options );
+		
+		template = opts.htmlTemplate;
+		
+		return this.each(function() {
+		
+			var $this = $(this),
+				timer,
+				TodaysDate = new Date(),
+				CountdownDate = new Date( opts.date ),
+				msPerDay = 864E5, //24 * 60 * 60 * 1000
+				timeLeft = CountdownDate.getTime() - TodaysDate.getTime(),
+				e_daysLeft = timeLeft / msPerDay,
+				totalDaysLeft = floor(e_daysLeft),
+				daysLeft = floor(e_daysLeft % 30),
+				daysLeft = totalDaysLeft,
+				e_monthsLeft = totalDaysLeft / 30,
+				monthsLeft = floor(e_monthsLeft),
+				e_hrsLeft = (e_daysLeft - totalDaysLeft)*24, //Gets remainder and * 24
+				hrsLeft = floor(e_hrsLeft),
+				minsLeft = floor((e_hrsLeft - hrsLeft)*60),					
+				e_minsleft = (e_hrsLeft - hrsLeft)*60, //Gets remainder and * 60
+				secLeft = floor((e_minsleft - minsLeft)*60),
+				time = "";
+
+
+
+
+
+
+
+2012-05-09 09:22              jquery.countdown1.2.js              Page 2
+
+
+
+			if( opts.onChange){
+				$this.bind("change", opts.onChange);
+			}
+			
+			if( opts.onComplete ){
+				$this.bind("complete", opts.onComplete);
+			}
+			
+			if ( opts.leadingZero ) {
+				
+				if ( minsLeft < 10) {
+					minsLeft = "0" + minsLeft;
+				}
+				
+				if ( secLeft < 10) {
+					secLeft = "0" + secLeft;
+				}
+			}
+
+			//Set initial time
+			if ( TodaysDate <= CountdownDate || opts.minus ) {
+				time = template.replace( rMonths, monthsLeft ).replace( rDays, daysLeft ).replace( rHours, hrsLeft ).replace( rMins, minsLeft ).replace(rSecs, secLeft);
+			} else {
+				time = template.replace( rDate, "00");
+				complete = true;
+			}
+							
+			timer = window.setInterval(function(){
+				
+				TodaysDate = new Date(),
+				CountdownDate = new Date( opts.date ),
+				msPerDay = 864E5, //24 * 60 * 60 * 1000
+				timeLeft = CountdownDate.getTime() - TodaysDate.getTime(),
+				e_daysLeft = timeLeft / msPerDay,
+				totalDaysLeft = floor(e_daysLeft),
+				daysLeft = floor(e_daysLeft % 30),
+				daysLeft = totalDaysLeft,
+				e_monthsLeft = totalDaysLeft / 30,
+				monthsLeft = floor(e_monthsLeft),
+				e_hrsLeft = (e_daysLeft - totalDaysLeft)*24, //Gets remainder and * 24
+				hrsLeft = floor(e_hrsLeft),
+				minsLeft = floor((e_hrsLeft - hrsLeft)*60),					
+				e_minsleft = (e_hrsLeft - hrsLeft)*60, //Gets remainder and * 60
+				secLeft = floor((e_minsleft - minsLeft)*60),
+				time = "";
+				
+				if ( opts.leadingZero ) {
+					
+					if ( minsLeft < 10) {
+						minsLeft = "0" + minsLeft;
+					}
+					
+					if ( secLeft < 10) {
+						secLeft = "0" + secLeft;
+					}
+
+
+
+
+
+
+
+2012-05-09 09:22              jquery.countdown1.2.js              Page 3
+
+
+				}
+
+				if ( TodaysDate <= CountdownDate || opts.minus ) {
+					time = template.replace( rMonths, monthsLeft ).replace( rDays, daysLeft ).replace( rHours, hrsLeft ).replace( rMins, minsLeft ).replace(rSecs, secLeft);
+				} else {
+					time = template.replace( rDate, "00");
+					complete = true;
+				}
+								
+				$this.html( time );
+				
+				$this.trigger('change', [timer] );
+			    
+				if ( complete ){
+
+					$this.trigger('complete');
+					clearInterval( timer );
+				}       		
+			
+			}, opts.updateTime);
+
+
+		    $this.html( time );
+			
+			if ( complete ){
+				$this.trigger('complete');
+				clearInterval( timer );
+			}
+			
+		});
+	};
+       
+})(jQuery);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                 login.mobile.php                 Page 1
+
+
+<?php
+	include '../templates/header.php';
+?>
+
+      <div id="content">
+        <div id="register">
+            <h1>Login:</h1>
+            <form name="login" action="db_logUser.php" method="post">
+                <ul>
+                    <li><input type="text" name="luser" id="luser" value="Email Address" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;"/></li>
+                    <li><input type="password" name="lpwd" id="lpwd" value="Password" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;"/></li>
+                    <li><input class="button" type="submit" value="Submit" /></li>
+                </ul>
+                
+            </form>
+        <a href="../pages/forgotpax.php"><li>Forgot Password/User Name</li></a>
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                    login.php                     Page 1
+
+
+<?php
+	include '../template/header.php';
+?>
+	<div id="content">
+    	<div id="register">
+    	    <h1>Login:</h1>
+    	    <form name="login" action="db_logUser.php" method="post">
+    	        <ul>
+    	            <li><input type="text" name="luser" id="luser" value="Email Address" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;"/></li>
+    	            <li><input type="password" name="lpwd" id="lpwd" value="Password" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;"/></li>
+    	            <li><input class="button" type="submit" value="Submit" /></li>
+    	        </ul>
+                
+    	    </form>
+	<a href="/pages/passwordRecovery.php"><li>Forgot Password</li></a>
+	</div>
+    </div>
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                logout.mobile.php                 Page 1
+
+
+<?php
+	session_start();
+	$_SESSION['views'] = 0;
+?>
+
+<?php
+	echo $_SESSION['views'];
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                    logout.php                    Page 1
+
+
+<?php
+	session_start();
+	$_SESSION['current_user'] = NULL;
+	unset($_SESSION['current_user']);
+	header("Location: http://sunshine.engr.sjsu.edu/");
+	exit;
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                  main.mobile.js                  Page 1
+
+
+var deviceInfo = function() {
+    document.getElementById("platform").innerHTML = device.platform;
+    document.getElementById("version").innerHTML = device.version;
+    document.getElementById("uuid").innerHTML = device.uuid;
+    document.getElementById("name").innerHTML = device.name;
+    document.getElementById("width").innerHTML = screen.width;
+    document.getElementById("height").innerHTML = screen.height;
+    document.getElementById("colorDepth").innerHTML = screen.colorDepth;
+};
+
+var getLocation = function() {
+    var suc = function(p) {
+        alert(p.coords.latitude + " " + p.coords.longitude);
+    };
+    var locFail = function() {
+    };
+    navigator.geolocation.getCurrentPosition(suc, locFail);
+};
+
+var beep = function() {
+    navigator.notification.beep(2);
+};
+
+var vibrate = function() {
+    navigator.notification.vibrate(0);
+};
+
+function roundNumber(num) {
+    var dec = 3;
+    var result = Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
+    return result;
+}
+
+var accelerationWatch = null;
+
+function updateAcceleration(a) {
+    document.getElementById('x').innerHTML = roundNumber(a.x);
+    document.getElementById('y').innerHTML = roundNumber(a.y);
+    document.getElementById('z').innerHTML = roundNumber(a.z);
+}
+
+var toggleAccel = function() {
+    if (accelerationWatch !== null) {
+        navigator.accelerometer.clearWatch(accelerationWatch);
+        updateAcceleration({
+            x : "",
+            y : "",
+            z : ""
+        });
+        accelerationWatch = null;
+    } else {
+        var options = {};
+        options.frequency = 1000;
+        accelerationWatch = navigator.accelerometer.watchAcceleration(
+                updateAcceleration, function(ex) {
+                    alert("accel fail (" + ex.name + ": " + ex.message + ")");
+
+
+
+
+
+
+
+2012-05-09 09:22                  main.mobile.js                  Page 2
+
+
+                }, options);
+    }
+};
+
+var preventBehavior = function(e) {
+    e.preventDefault();
+};
+
+function dump_pic(data) {
+    var viewport = document.getElementById('viewport');
+    console.log(data);
+    viewport.style.display = "";
+    viewport.style.position = "absolute";
+    viewport.style.top = "10px";
+    viewport.style.left = "10px";
+    document.getElementById("test_img").src = "data:image/jpeg;base64," + data;
+}
+
+function fail(msg) {
+    alert(msg);
+}
+
+function show_pic() {
+    navigator.camera.getPicture(dump_pic, fail, {
+        quality : 50
+    });
+}
+
+function close() {
+    var viewport = document.getElementById('viewport');
+    viewport.style.position = "relative";
+    viewport.style.display = "none";
+}
+
+function contacts_success(contacts) {
+    alert(contacts.length
+            + ' contacts returned.'
+            + (contacts[2] && contacts[2].name ? (' Third contact is ' + contacts[2].name.formatted)
+                    : ''));
+}
+
+function get_contacts() {
+    var obj = new ContactFindOptions();
+    obj.filter = "";
+    obj.multiple = true;
+    navigator.contacts.find(
+            [ "displayName", "name" ], contacts_success,
+            fail, obj);
+}
+
+function check_network() {
+    var networkState = navigator.network.connection.type;
+
+    var states = {};
+    states[Connection.UNKNOWN]  = 'Unknown connection';
+    states[Connection.ETHERNET] = 'Ethernet connection';
+
+
+
+
+
+
+
+2012-05-09 09:22                  main.mobile.js                  Page 3
+
+
+    states[Connection.WIFI]     = 'WiFi connection';
+    states[Connection.CELL_2G]  = 'Cell 2G connection';
+    states[Connection.CELL_3G]  = 'Cell 3G connection';
+    states[Connection.CELL_4G]  = 'Cell 4G connection';
+    states[Connection.NONE]     = 'No network connection';
+
+    confirm('Connection type:\n ' + states[networkState]);
+}
+
+var watchID = null;
+
+function updateHeading(h) {
+    document.getElementById('h').innerHTML = h.magneticHeading;
+}
+
+function toggleCompass() {
+    if (watchID !== null) {
+        navigator.compass.clearWatch(watchID);
+        watchID = null;
+        updateHeading({ magneticHeading : "Off"});
+    } else {        
+        var options = { frequency: 1000 };
+        watchID = navigator.compass.watchHeading(updateHeading, function(e) {
+            alert('Compass Error: ' + e.code);
+        }, options);
+    }
+}
+
+function init() {
+    // the next line makes it impossible to see Contacts on the HTC Evo since it
+    // doesn't have a scroll button
+    // document.addEventListener("touchmove", preventBehavior, false);
+    document.addEventListener("deviceready", deviceInfo, true);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                     menu.php                     Page 1
+
+
+<html>
+<header><h1>Menu</h1></header>
+<body>
+<?php
+include("connection.php");
+
+	$acctId = $_REQUEST['acctId'];
+	
+$query = "SELECT * FROM ACCOUNTS WHERE ACCT_ID = $acctId";
+$results = mysql_query($query) or die(mysql_error());
+
+$row = mysql_fetch_array($results);
+
+echo "Hello " .$row['ACCT_NAME'];
+
+if($row['ACCT_TYPE']=='1'){
+?>
+<form action = "createCoupon.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Create Coupon</button></form>
+<form action = "inventory.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Inventory</button></form>
+<form action = "shoppingCart.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Transactions</button></form>
+<form action = "editAccount.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Edit Account</button></form>
+<?php
+}else{
+?>
+<form action = "couponTable.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Browse</button></form>
+<form action = "search.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Search</button></form>
+<form action = "shoppingCart.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Shopping Cart</button></form>
+<form action = "purchaseHistory.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Purchase History</button></form>
+<form action = "editAccount.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Edit Account</button></form>
+<?php
+}
+include("close.php");
+?>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                  menu.php.save                   Page 1
+
+
+<html>
+<header><h1>Menu</h1></header>
+<body>
+<?php
+include("connection.php");
+
+	$acctId = $_REQUEST['acctId'];
+	
+$query = "SELECT * FROM ACCOUNTS WHERE ACCT_ID = $acctId";
+$results = mysql_query($query) or die(mysql_error());
+
+$row = mysql_fetch_array($results);
+
+echo "Hello " .$row['ACCT_NAME'];
+
+if($row['ACCT_TYPE']=='1'){
+?>
+<form action = "createCoupon.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Create Coupon</button></form>
+<form action = "inventory.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Inventory</button></form>
+<form action = "shoppingCart.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Transactions</button></form>
+<form action = "purchaseHistory.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Purchase History</button></form>
+<form action = "editAccount.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Edit Account</button></form>
+<?php
+}else{
+?>
+<form action = "couponTable.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Browse</button></form>
+<form action = "search.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Search</button></form>
+<form action = "shoppingCart.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Shopping Cart</button></form>
+<form action = "purchaseHistory.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Purchase History</button></form>
+<form action = "editAccount.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Edit Account</button></form>
+<?php
+}
+include("close.php");
+?>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                 menu.php.save.1                  Page 1
+
+
+<html>
+<header><h1>Menu</h1></header>
+<body>
+<?php
+include("connection.php");
+
+	$acctId = $_REQUEST['acctId'];
+	
+$query = "SELECT * FROM ACCOUNTS WHERE ACCT_ID = $acctId";
+$results = mysql_query($query) or die(mysql_error());
+
+$row = mysql_fetch_array($results);
+
+echo "Hello " .$row['ACCT_NAME'];
+
+if($row['ACCT_TYPE']=='1'){
+?>
+<form action = "createCoupon.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Create Coupon</button></form>
+<form action = "inventory.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Inventory</button></form>
+<form action = "shoppingCart.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Transactions</button></form>
+
+<form action = "editAccount.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Edit Account</button></form>
+<?php
+}else{
+?>
+<form action = "couponTable.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Browse</button></form>
+<form action = "search.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Search</button></form>
+<form action = "shoppingCart.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Shopping Cart</button></form>
+<form action = "purchaseHistory.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Purchase History</button></form>
+<form action = "editAccount.php"><input type="hidden" name="acctId" value="<?php echo $acctId ?>"  /><button type="submit">Edit Account</button></form>
+<?php
+}
+include("close.php");
+?>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22               passwordProcess.php                Page 1
+
+
+<?php
+	include '../template/header.php';
+?>
+
+<div id="content">
+<div class="no-margin-input" id="contact">
+<?php
+include("connection.php");
+
+$email = $_REQUEST['email'];
+$query = "SELECT ACCT_SQUEST, ACCT_ID FROM ACCOUNTS WHERE ACCT_EMAIL='$email'";
+$result = mysql_query($query) or die(mysql_error());
+if(mysql_num_rows($result)){
+	$row = mysql_fetch_array($result);
+?>
+<form action = "passwordUpdate.php">
+<ul>
+	<li>New Password: <input type="password" name="pwdA" /></li>
+	<li>Confirm New Password: <input type="password" name="pwdB"  /></li>
+	<li>Question: <?php print $row["ACCT_SQUEST"] ?></li>
+	<li>Answer: <input type="password" name="answer" /></li>
+</ul>
+<input type="hidden" name="acctId" value="<?php echo $row['ACCT_ID'] ?>" />
+<input type="submit" />
+</form>
+<?php	
+}else{
+	echo "User does not exist.";
+}
+
+?>
+
+
+
+
+
+<?php
+include("close.php");
+?>
+</div>
+</div>
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22               passwordRecovery.php               Page 1
+
+
+<?php
+	include '../template/header.php';
+?>
+
+<div id="content">
+<div id="contact">
+
+<form action = "passwordProcess.php">
+E-mail: <input type="text" name="email" /></br>
+<input type="submit" />
+</form>
+
+
+
+</div>
+</div>
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                passwordUpdate.php                Page 1
+
+
+<?php
+	include '../template/header.php';
+?>
+
+<div id="content">
+<div id="contact">
+
+<h1>Account Update</h1>
+
+<?php
+include("connection.php");
+
+$acctId = $_REQUEST['acctId'];
+$pwdA = $_REQUEST['pwdA'];
+$pwdB = $_REQUEST['pwdB'];
+$answer = $_REQUEST['answer'];
+
+$query = "SELECT * FROM ACCOUNTS WHERE ACCT_ID = $acctId";
+$result = mysql_query($query) or die(mysql_error());
+$row = mysql_fetch_array($result);
+
+	if($row['ACCT_SANSER']==sha1(md5($answer))){
+		if($pwdA==$pwdB){
+			echo "Password has been updated.";
+			$pwdA = sha1(md5($pwdA));
+			$answer = sha1(md5($answer));
+			mysql_query("UPDATE ACCOUNTS SET ACCT_PASS='$pwdA' WHERE ACCT_ID = $acctId") or die(mysql_error());
+		}else{
+			echo "New Password and Confirm Password needs to match.";
+		}
+	}else{
+		echo "Wrong Answer";
+	}
+
+include("close.php");
+?>
+</div>
+</div>
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22               processCheckOut.php                Page 1
+
+
+<?php
+	include '../template/header.php';
+?>
+
+<div id="content">
+<div id="contact">
+
+<h1>Process Check Out.</h1>
+<?php
+	include("connection.php");
+	
+	$month = $_REQUEST['month'];
+	$year = $_REQUEST['year'];
+	$bZip = $_REQUEST['bZip'];
+	$bCity = $_REQUEST['bCity'];
+	$bState = $_REQUEST['bState'];
+	$bNumber = $_REQUEST['bNumber'];
+	$bCode = $_REQUEST['bCode'];
+	$bAddress = $_REQUEST['bAddress'];
+	$bName = $_REQUEST['bName'];
+	$bSubTotal = $_REQUEST['subTotal'];
+	$acctId = $_REQUEST['acctId'];
+	$lastFour = substr($bNumber, -4);
+	$bNumber = sha1(md5($bNumber));
+	$bCode = sha1(md5($bCode));
+	
+	$today = date('Y-m-d H:i:s');
+	
+	$query = "SELECT COUPONS.COUP_VENDOR, COUPONS.COUP_PRICE, CART.CART_QUAN, COUPONS.COUP_IMGLOC, COUPONS.COUP_ID FROM CART LEFT JOIN COUPONS ON COUPONS.COUP_ID = CART.CART_COUP_ID
+	WHERE CART.CART_ACCT_ID = $acctId";
+	$result = mysql_query($query) or die(mysql_error());
+	
+	while($row = mysql_fetch_array($result)){
+		mysql_query("INSERT INTO PURCHASES (PUR_ACCT_ID, PUR_VENDNAME, PUR_COUP_ID, PUR_QUAN, PUR_PRICE, PUR_PAID, PUR_DATE, PUR_BADD, PUR_BCTY, PUR_BSTA, PUR_BZIP, PUR_BNAME, PUR_CCN, PUR_CCLFN, PUR_CCEX, PUR_CCSN) VALUES ('$acctId', '$row[COUP_VENDOR]', '$row[COUP_ID]', '$row[CART_QUAN]', '$row[COUP_PRICE]', '$bSubTotal', '$today', '$bAddress', '$bCity', '$bState', '$bZip', '$bName', '$bNumber', '$lastFour', '$year-$month-00 00:00:00','$bCode')") or die(mysql_error());
+
+	}
+	
+	$query2 = "SELECT * FROM CART WHERE CART_ACCT_ID = $acctId";
+	$result2 = mysql_query($query2);
+	while($row = mysql_fetch_array($result2)){
+		mysql_query("DELETE FROM CART WHERE CART_ACCT_ID = $acctId") or die(mysql_error());
+	}	
+
+	
+	
+	
+	include("close.php");
+?>
+
+
+</div>
+</div>
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+2012-05-09 09:22                processCoupon.php                 Page 1
+
+
+<?php
+	include '../template/header.php';
+?>
+
+<div id="content">
+<div id="contact">
+<h1>Coupon Added</h1>
+<p>
+<?php
+	include("connection.php");
+	
+	$acctId = $_REQUEST['acctId'];
+	
+	$title = $_REQUEST["title"];
+	$quantity = $_REQUEST["quantity"];
+	$price = $_REQUEST["price"];
+	$category = $_REQUEST["category"];
+	$vName = $_REQUEST["vName"];
+	$description = $_REQUEST["description"];
+	$month = $_REQUEST["month"];
+	$day = $_REQUEST["day"];
+	$year = $_REQUEST["year"];
+	$hour = $_REQUEST["hour"];
+	$minute = $_REQUEST["minute"];
+	$sMonth = $_REQUEST["sMonth"];
+	$sDay = $_REQUEST["sDay"];
+	$sYear = $_REQUEST["sYear"];
+	$sHour = $_REQUEST["sHour"];
+	$sMinute = $_REQUEST["sMinute"];
+	$url = $_REQUEST["url"];
+	
+	echo "'$title', $quantity, $quantity, $price, '$category', '$vName', '$description', '2012-04-14 21:28:49', '2012-04-14 21:28:49'";
+
+	
+	mysql_query("INSERT INTO COUPONS (COUP_NAME, COUP_TOTAL, COUP_LEFT, COUP_PRICE, COUP_CATNAME, COUP_VENDOR, COUP_DESC, COUP_IMGLOC, COUP_START, COUP_EXPR) VALUES ('$title', '$quantity', '$quantity', '$price','$category','$vName','$description', '$url', '$sYear-$sMonth-$sDay $sHour:$sDay:00', '$year-$month-$day $hour:$day:00');");
+
+	include("connection.php");
+
+?>
+</p>
+</div>
+</div>
+<script>
+window.setTimeout(function(){window.location = "http://sunshine.engr.sjsu.edu/pages/shoppingCart.php?acctId=<?php echo $acctId; ?>";}, 2000);
+</script>
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                   process.php                    Page 1
+
+
+<?php
+	include('../template/header.php');
+?>
+<div id="content">
+<form action = "testProcess.php">
+<div>
+	<input type="radio" name="ccard" value="visa" checked="checked" />
+	Visa
+	<input type="radio" name="ccard" value="mastarcard" /> MasterCard
+	<input type="radio" name="ccard" value="discover" /> Discover <br />
+	
+	Credit Card number:
+	<input type="text" name="ccnumber" size="20" /> <br />
+	
+	<label>
+		<input type="checkbox" name="express" />
+		Express shipping? ($10 extra)
+	</label> <br />
+	<input type="submit" />
+</div>
+</form>
+
+
+<form action="welcome.php" method="post">
+Name: <input type="text" name="fname" />
+Age: <input type="text" name="age" />
+<input type="submit" />
+</form>
+</div>
+<?php
+	include('../template/footer.php');
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22               purchaseHistory.php                Page 1
+
+
+<?php
+	include '../template/header.php';
+?>
+
+<div id="content">
+<div id="cart">
+
+<h1>Purchase History</h1>
+
+
+<?php
+include("connection.php");
+
+$acctId = $_REQUEST['acctId'];
+$result = mysql_query("SELECT * FROM ACCOUNTS WHERE ACCT_ID = $acctId");
+$type = mysql_fetch_array($result);
+
+if($type['ACCT_TYPE'] == 0){
+$query1 = "SELECT *
+FROM PURCHASES
+LEFT JOIN COUPONS ON COUPONS.COUP_ID = PURCHASES.PUR_COUP_ID
+WHERE PURCHASES.PUR_ACCT_ID =$acctId";
+
+if(isset($_REQUEST['sort'])){
+	switch ($_REQUEST['sort'])
+	{
+		case 'title':
+		$query1 .= " ORDER BY COUPONS.COUP_NAME";
+		break;
+		case 'vendor':
+		$query1 .= " ORDER BY COUPONS.COUP_VENDOR";
+		break;
+		case 'card':
+		$query1 .= " ORDER BY PURCHASES.PUR_CCLFN";
+		break;
+		case 'price':
+		$query1 .= " ORDER BY COUPONS.COUP_PRICE";
+		break;
+		case 'quantity':
+		$query1 .= " ORDER BY PURCHASES.PUR_QUAN";
+		break;
+		case 'paid':
+		$query1 .= " ORDER BY PURCHASES.PUR_PAID";
+		break;
+		case 'date':
+		$query1 .= " ORDER BY PURCHASES.PUR_DATE";
+		break;
+		default:
+	}
+}else{
+	$query1 .= " ORDER BY COUPONS.COUP_ID";
+}
+
+
+
+$result1 = mysql_query($query1) or die(mysql_error());
+
+
+
+
+
+
+
+2012-05-09 09:22               purchaseHistory.php                Page 2
+
+
+	
+
+echo "<table border=1>
+<tr align = left>
+<th><a href='purchaseHistory.php?sort=title&acctId=$acctId'>Title</a></th>
+<th><a href='purchaseHistory.php?sort=vendor&acctId=$acctId'>Vendor</a></th>
+<th><a href='purchaseHistory.php?sort=card&acctId=$acctId'>Credit Card</a></th>
+<th><a href='purchaseHistory.php?sort=price&acctId=$acctId'>Price</a></th>
+<th><a href='purchaseHistory.php?sort=quantity&acctId=$acctId'>Quantity</a></th>
+<th><a href='purchaseHistory.php?sort=paid&acctId=$acctId'>Paid</a></th>
+<th><a href='purchaseHistory.php?sort=date&acctId=$acctId'>Date</a></th>
+</tr>";
+
+while($row = mysql_fetch_array($result1))
+  {
+  $coupId = $row['COUP_ID'];
+  echo "<tr>";
+  echo "<td>" . $row['COUP_NAME'] . "</td>";
+  echo "<td>" . $row['COUP_VENDOR'] . "</td>";
+  echo "<td>********" . $row['PUR_CCLFN'] . "</td>";
+  echo "<td>" . $row['COUP_PRICE'] . "</td>";
+  echo "<td>" . $row['PUR_QUAN'] . "</td>";
+  echo "<td>" . $row['PUR_PAID'] . "</td>";
+  echo "<td>" . $row['PUR_DATE'] . "</td>";
+
+  echo "</tr>";
+  }
+	
+	echo "</table>";
+}else{
+
+
+
+
+
+$result = mysql_query("SELECT * FROM ACCOUNTS WHERE ACCT_ID = $acctId") or die (mysql_error()); 
+$row = mysql_fetch_array($result) or die (mysql_error()); 
+$vendorName = $row['ACCT_NAME'];
+$query1 = "SELECT * FROM PURCHASES WHERE PUR_VENDNAME='$vendorName'";
+
+if(isset($_REQUEST['sort'])){
+	switch ($_REQUEST['sort'])
+	{
+		case 'name':
+		$query1 .= " ORDER BY PURCHASES.PUR_BNAME";
+		break;
+		case 'price':
+		$query1 .= " ORDER BY PURCHASES.PUR_PRICE";
+		break;
+		case 'quantity':
+		$query1 .= " ORDER BY PURCHASES.PUR_QUAN";
+		break;		
+		case 'paid':
+		$query1 .= " ORDER BY PURCHASES.PUR_PAID";
+		break;	
+		case 'date':
+
+
+
+
+
+
+
+2012-05-09 09:22               purchaseHistory.php                Page 3
+
+
+		$query1 .= " ORDER BY PURCHASES.PUR_DATE";
+		break;			
+		case 'address':
+		$query1 .= " ORDER BY PURCHASES.PUR_BADD";
+		break;
+		case 'city':
+		$query1 .= " ORDER BY PURCHASES.PUR_BCTY";
+		break;		
+		case 'state':
+		$query1 .= " ORDER BY PURCHASES.PUR_BSTA";
+		break;			
+		case 'zip':
+		$query1 .= " ORDER BY PURCHASES.PUR_BZIP";
+		break;		
+		case 'leftFour':
+		$query1 .= " ORDER BY PURCHASES.PUR_CCLFN";
+		break;			
+		case 'expr':
+		$query1 .= " ORDER BY PURCHASES.PUR_CCEX";
+		break;			
+		default:
+	}
+	
+}else{
+	$query1 .= " ORDER BY PURCHASES.PUR_DATE";
+}
+
+$result1 = mysql_query($query1) or die(mysql_error());
+	
+
+echo "<table border=1>
+<tr align = left>
+<th><a href='purchaseHistory.php?sort=name&acctId=$acctId'>Name</a></th>
+<th><a href='purchaseHistory.php?sort=price&acctId=$acctId'>Price</a></th>
+<th><a href='purchaseHistory.php?sort=quantity&acctId=$acctId'>Quantity</a></th>
+<th><a href='purchaseHistory.php?sort=paid&acctId=$acctId'>Paid</a></th>
+<th><a href='purchaseHistory.php?sort=date&acctId=$acctId'>Date</a></th>
+<th><a href='purchaseHistory.php?sort=address&acctId=$acctId'>Address</a></th>
+<th><a href='purchaseHistory.php?sort=city&acctId=$acctId'>City</a></th>
+<th><a href='purchaseHistory.php?sort=state&acctId=$acctId'>State</a></th>
+<th><a href='purchaseHistory.php?sort=zip&acctId=$acctId'>Zip</a></th>
+<th><a href='purchaseHistory.php?sort=leftFour&acctId=$acctId'>Left Four</a></th>
+<th><a href='purchaseHistory.php?sort=expr&acctId=$acctId'>Expiration</a></th>
+</tr>";
+
+while($row = mysql_fetch_array($result1))
+  {
+  echo "<tr>";
+  echo "<td>" . $row['PUR_BNAME'] . "</td>";
+  echo "<td>" . $row['PUR_PRICE'] . "</td>";
+  echo "<td>" . $row['PUR_QUAN'] . "</td>";
+  echo "<td>" . $row['PUR_PAID'] . "</td>";
+  echo "<td>" . $row['PUR_DATE'] . "</td>";
+  echo "<td>" . $row['PUR_BADD'] . "</td>";
+  echo "<td>" . $row['PUR_BCTY'] . "</td>";
+  echo "<td>" . $row['PUR_BSTA'] . "</td>";
+
+
+
+
+
+
+
+2012-05-09 09:22               purchaseHistory.php                Page 4
+
+
+  echo "<td>" . $row['PUR_BZIP'] . "</td>";
+  echo "<td>" . $row['PUR_CCLFN'] . "</td>";
+  echo "<td>" . $row['PUR_CCEX'] . "</td>";
+  echo "</tr>";
+  }
+	
+	echo "</table>";
+}
+	include("close.php");
+?>
+
+</div>
+</div>
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22               register.mobile.php                Page 1
+
+
+<?php
+	include '../templates/header.php';
+?>
+
+<div id="register">
+    	    <h1>Register Below:</h1>
+    	    <form name="register" action="db_regUser.php" method="post">
+    	        <ul>
+    	            <li><input type="text" name="email" id="email" value="Email" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;"/></li>
+    	            <li><input type="text" name="ruser" id="ruser" value="Username" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;"/></li>
+    	            <li><input type="password" width="500px" name="rpwd" id="rpwd" value="Password" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;"/></li>
+    	            <li><input type="text" name="squest" id="squest" value="Secret Question" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;"/></li>
+		    <li><input type="password" name="sanser" id="sanser" value="Secret Answer" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;"/></li>
+		    <li><select id="role" name="role">
+				<option id="suser" name="suser" value="0">User</option>
+				<option id="svendor" name="svendor" value="1">Vendor</option>
+			</select></li>
+		    <li><input class="button" type="submit" value="Submit" /></li>
+    	        </ul>
+                
+    	    </form>
+    	</div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                   register.php                   Page 1
+
+
+<?php 
+	include '../template/header.php'
+?>
+	<div id="content">
+    	<div id="register">
+    	    <h1>Register Below:</h1>
+    	    <form name="register" action="db_regUser.php" method="post">
+    	        <ul>
+    	            <li><input type="text" name="email" id="email" value="Email" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;"/></li>
+    	            <li><input type="text" name="ruser" id="ruser" value="Username" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;"/></li>
+    	            <li><input type="password" width="500px" name="rpwd" id="rpwd" value="Password" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;"/></li>
+    	            <li><input type="text" name="squest" id="squest" value="Secret Question" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;"/></li>
+		    <li><input type="text" name="sanser" id="sanser" value="Secret Answer" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;"/></li>
+		    <li><select id="role" name="role">
+				<option id="suser" name="suser" value="0">User</option>
+				<option id="svendor" name="svendor" value="1">Vendor</option>
+			</select></li>
+		    <li><input class="button" type="submit" value="Submit" /></li>
+    	        </ul>
+                
+    	    </form>
+    	</div>
+    </div>
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                  searchform.php                  Page 1
+
+
+<?php
+	include '../template/header.php';
+?>
+
+<div id="content">
+<div id="contact">
+	<form name="searchcoupons" action="/pages/searchresult.php" method="get">
+		<label for="search">Search:</label><input id="search" type="text" name="keyword" />
+		<input type="submit" value="Submit" />
+	</form> 
+</div>
+</div>
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                 searchresult.php                 Page 1
+
+
+<?php
+        include('../template/header.php');
+?>
+<div id="content">
+<div id="cart">
+<?php
+$link = mysql_connect('localhost', 'shinetheweb', 'urmysunshine') or die('Could not connect: ' . mysql_error());
+mysql_select_db('sunshinedeals') or die('Could not select database');
+
+if(!isset($_REQUEST['keyword']))
+	die('<p>Invalid Keyword</p>');
+
+$keyword = trim($_REQUEST['keyword']);
+
+if(strlen($keyword) < 2 )
+	die('<p>Invalid Keyword</p>');
+
+$searchquery = "SELECT * FROM COUPONS WHERE COUP_NAME LIKE '%$keyword%' OR COUP_CATNAME LIKE '%$keyword%'
+			OR COUP_VENDOR LIKE '%$keyword%' OR COUP_DESC LIKE '%$keyword%'";
+
+
+if(isset($_REQUEST['sort']))
+{
+	switch($_REQUEST['sort'])
+	{
+		case 'id':
+			$searchquery .= " ORDER BY COUP_ID";
+			break;
+		case 'title':
+			$searchquery .= " ORDER BY COUP_NAME";
+			break;
+		case 'category':
+			$searchquery .= " ORDER BY COUP_CATNAME";
+			break;
+		case 'desc':
+			$searchquery .= " ORDER BY COUP_DESC";
+			break;
+		case 'price':
+			$searchquery .= " ORDER BY COUP_PRICE";
+			break;
+		case 'left':
+			$searchquery .= " ORDER BY COUP_LEFT";
+			break;
+		default:
+			$searchquery .= " ORDER BY COUP_ID";
+			break;
+	}
+}
+
+$result = mysql_query($searchquery);
+
+if(isset($_REQUEST['acctId']))
+{
+	$acctId=$_REQUEST['acctId'];
+	$urlending = "&acctId=$acctId&keyword=$keyword";
+}
+
+
+
+
+
+
+
+2012-05-09 09:22                 searchresult.php                 Page 2
+
+
+else
+{
+	$urlending = "&keyword=$keyword";
+}
+
+echo"
+<table border='1'>
+<tr align = left>
+<th><a href='searchresult.php?sort=title$urlending'>Title</a></th>";
+echo "
+<th><a href='searchresult.php?sort=category$urlending'>Category</a></th>
+<th><a href='searchresult.php?sort=desc$urlending'>Description</a></th>
+<th><a href='searchresult.php?sort=left$urlending'>Left</a></th>
+<th><a href='searchresult.php?sort=price$urlending'>Price</a></th>
+<th></th>
+</tr>";
+
+while($row = mysql_fetch_array($result))
+{
+echo '<!-- Row exec -->';
+	if($row['COUP_LEFT']==0) {  } 
+	else {
+		$coupId = $row['COUP_ID'];
+		echo "<tr>";
+
+		if(isset($_SESSION['current_user']))
+		{	$coupUrl = "viewCoupon.php?coupId=$coupId";	}
+		else
+		{	$coupUrl = "viewCoupon.php?coupId=$coupId"; 	}
+
+		echo '<td><a href="'.$coupUrl.'"><div class="crop"><img name="myimage" src="'.$row['COUP_IMGLOC'].'" width="60" height="60" alt="image" /></div>'.$row['COUP_NAME'].'</a></td>';
+		echo "<td>" . $row['COUP_CATNAME'] . "</td>";
+		echo "<td>" . $row['COUP_DESC'] . "</td>";
+		echo "<td>" . $row['COUP_LEFT'] . "</td>";
+		echo "<td>" . $row['COUP_PRICE'] . "</td>";
+			if(isset($_SESSION['current_user']) && $_SESSION['acctType'] != 1){
+				$url = "addCart.php?coupId=$coupId&acctId=$acctId";
+			}
+			else {
+				$url = "login.php";
+			}
+		echo "<td><a href='". $url ."'>Add</a></td>";
+		echo "</tr>";
+	}
+}
+
+
+echo "</table>";
+
+mysql_free_result($result);
+mysql_close($link);
+?>
+
+</div>
+</div>
+<?php
+
+
+
+
+
+
+
+2012-05-09 09:22                 searchresult.php                 Page 3
+
+
+	include('../template/footer.php');
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22               searchresult.php.BAK               Page 1
+
+
+<?php
+        include('../template/headerPages.php');
+?>
+<div id="content">
+<div id="cart">
+<?php
+$link = mysql_connect('localhost', 'shinetheweb', 'urmysunshine') or die('Could not connect: ' . mysql_error());
+mysql_select_db('sunshinedeals') or die('Could not select database');
+
+if(!isset($_REQUEST['keyword']))
+	die('<p>Invalid Keyword</p>');
+
+$keyword = trim($_REQUEST['keyword']);
+
+if(strlen($keyword) < 2 )
+	die('<p>Invalid Keyword</p>');
+
+
+$searchquery = "SELECT * FROM COUPONS WHERE LOWER(COUP_NAME) LIKE LOWER('%$keyword%') OR LOWER(COUP_CATNAME) LIKE LOWER('%$keyword%')
+							OR LOWER(COUP_VENDOR) LIKE LOWER('%$keyword%') OR LOWER(COUP_DESC) LIKE LOWER('%$keyword%')";
+
+
+if(isset($_REQUEST['sort']))
+{
+	switch($_REQUEST['sort'])
+	{
+		case 'id':
+			$searchquery .= " ORDER BY COUP_ID";
+			break;
+		case 'title':
+			$searchquery .= " ORDER BY COUP_NAME";
+			break;
+		case 'category':
+			$searchquery .= " ORDER BY COUP_CATNAME";
+			break;
+		case 'desc':
+			$searchquery .= " ORDER BY COUP_DESC";
+			break;
+		case 'price':
+			$searchquery .= " ORDER BY COUP_PRICE";
+			break;
+		case 'left':
+			$searchquery .= " ORDER BY COUP_LEFT";
+			break;
+		default:
+			$searchquery .= " ORDER BY COUP_ID";
+			break;
+	}
+}
+
+
+$row = mysql_fetch_array($result);
+$size = 0;
+
+
+echo"
+
+
+
+
+
+
+
+2012-05-09 09:22               searchresult.php.BAK               Page 2
+
+
+<table border='1'>
+<tr align = left>
+<th><a href='searchresult.php?sort=title&acctId=$acctId&keyword=$keyword'>Title</a></th>";
+echo "
+<th><a href='searchresult.php?sort=category&acctId=$acctId&keyword=$keyword'>Category</a></th>
+<th><a href='searchresult.php?sort=desc&acctId=$acctId&keyword=$keyword'>Description</a></th>
+<th><a href='searchresult.php?sort=left&acctId=$acctId&keyword=$keyword'>Left</a></th>
+<th><a href='searchresult.php?sort=price&acctId=$acctId&keyword=$keyword'>Price</a></th>
+<th></th>
+</tr>";
+
+while($row = mysql_fetch_array($result))
+  {
+  if($row['COUP_LEFT']==0){
+
+  }else{
+  $coupId = $row['COUP_ID'];
+  echo "<tr>";
+  if(isset($_SESSION['current_user'])){
+    $coupUrl = "viewCoupon.php?coupId=$coupId";
+  }
+  else{
+    $coupUrl = "viewCoupon.php?coupId=$coupId";
+  }
+  echo '<td><a href="'.$coupUrl.'"><div class="crop"><img name="myimage" src="'.$row['COUP_IMGLOC'].'" width="60" height="60" alt="image" /></div>'.$row['COUP_NAME'].'</a></td>';
+  echo "<td>" . $row['COUP_CATNAME'] . "</td>";
+  echo "<td>" . $row['COUP_DESC'] . "</td>";
+  echo "<td>" . $row['COUP_LEFT'] . "</td>";
+  echo "<td>" . $row['COUP_PRICE'] . "</td>";
+  if(isset($_SESSION['current_user']) && $_SESSION['acctType'] != 1){
+    $url = "addCart.php?coupId=$coupId&acctId=$acctId";
+  }
+  else{
+    $url = "login.php";
+  }
+  echo "<td><a href='". $url ."'>Add</a></td>";
+  echo "</tr>";
+  }
+  }
+
+        echo "</table>";
+?>
+<?php
+	mysql_free_result($result);
+	mysql_close($link);
+?>
+
+</div>
+</div>
+<?php
+include('../template/footerPages.php');
+?>
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                     serv.php                     Page 1
+
+
+<ul>
+	<?php
+		$db = mysql_connect('localhost', 'shinetheweb','urmysunshine');
+		mysql_select_db("sunshinedeals");
+		$results = mysql_query("SELECT * FROM COUPONS;") or die(mysql_error());
+		while ($row = mysql_fetch_array($results)){
+	?>
+		<li><?= $row["COUP_NAME"] ?></li>
+	<?php
+		}
+		mysql_close($db);
+	?>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                   settings.php                   Page 1
+
+
+<?php
+	include '../template/header.php';
+?>
+
+<div id="content">
+<div id="contact" class="small">
+	<ul>
+		<li><a href="/pages/editAccount.php">Edit Account</a></li>
+	</ul>
+
+</div>
+</div>
+<?php
+	include '../template/footer.php'; 
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                 shoppingCart.php                 Page 1
+
+
+<?php
+        include('../template/header.php');
+?>
+<div id="content">
+<div id="cart">
+<h1>Shopping Cart</h1>
+
+
+<?php
+include("connection.php");
+
+$acctId = $_REQUEST['acctId'];
+
+$query1 = "SELECT COUPONS.COUP_NAME, COUPONS.COUP_PRICE, CART.CART_QUAN, COUPONS.COUP_IMGLOC, COUPONS.COUP_ID
+FROM CART
+LEFT JOIN COUPONS ON COUPONS.COUP_ID = CART.CART_COUP_ID
+WHERE CART.CART_ACCT_ID =$acctId";
+
+if(isset($_REQUEST['sort'])){
+	switch ($_REQUEST['sort'])
+	{
+		case 'title':
+		$query1 .= " ORDER BY COUPONS.COUP_NAME";
+		break;
+		case 'price':
+		$query1 .= " ORDER BY COUPONS.COUP_PRICE";
+		break;
+		case 'quantity':
+		$query1 .= " ORDER BY CART.CART_QUAN";
+		break;
+		default:
+	}
+}else{
+	$query1 .= " ORDER BY COUPONS.COUP_ID";
+}
+
+
+
+$result1 = mysql_query($query1) or die(mysql_error());
+	
+$table = "CART";
+$sum = 0;
+
+echo "<table border=1>
+<tr align = left>
+<th><a href='shoppingCart.php?sort=title&acctId=$acctId'>Title</a></th>
+<th class='quantity'><a href='shoppingCart.php?sort=quantity&acctId=$acctId'>Quantity</a></th>
+<th><a href='shoppingCart.php?sort=price&acctId=$acctId'>Price</a></th>
+</tr>";
+
+while($row = mysql_fetch_array($result1))
+  {
+  $coupId = $row['COUP_ID'];
+  $sum += $row['COUP_PRICE'] * $row['CART_QUAN'];
+  echo "<tr>";
+  echo "<td class='deal'>" . '<a href="viewCoupon.php?coupId='.$coupId.'&acctId='.$acctId.'"><div class="crop"><img name="myimage" src="'.$row['COUP_IMGLOC'].'" width="60" height="60" alt="image" /></div>' . $row['COUP_NAME'] . "</a></td>";
+
+
+
+
+
+
+
+2012-05-09 09:22                 shoppingCart.php                 Page 2
+
+
+  echo "<td class='quantity'><a href='editQuantity.php?coupId=$coupId&acctId=$acctId'>" . $row['CART_QUAN'] . "</a></td>";
+  echo "<td>$" . $row['COUP_PRICE'] . "</td>";
+  echo "</tr>";
+  }
+	echo '<tr class="total">
+		<td></td>
+		<td></td>
+		<td>$'.$sum.'</td>';
+	echo '<tr>
+                <td></td>
+                <td></td>
+                <td>Total</td>';
+			
+	echo "</table>";
+	include("close.php");
+?>
+<a href="checkOut.php?acctId=<?php echo $acctId ?>" class="button">Check out</a>
+</div>
+</div>
+<?php
+	include('../template/footer.php');
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                sponsoredDeals.php                Page 1
+
+
+<?php
+$query = "SELECT * FROM COUPONS WHERE COUP_ID = 1";
+$result = mysql_query($query) or die(mysql_error());
+$Coupon1 = mysql_fetch_array($result) or die(mysql_error());
+$query = "SELECT * FROM COUPONS WHERE COUP_ID = 2";
+$result = mysql_query($query) or die(mysql_error());
+$Coupon2 = mysql_fetch_array($result) or die(mysql_error());
+$query = "SELECT * FROM COUPONS WHERE COUP_ID = 3";
+$result = mysql_query($query) or die(mysql_error());
+$Coupon3 = mysql_fetch_array($result) or die(mysql_error());
+$query = "SELECT * FROM COUPONS WHERE COUP_ID = 4";
+$result = mysql_query($query) or die(mysql_error());
+$Coupon4 = mysql_fetch_array($result) or die(mysql_error());
+?>  
+
+
+
+
+  	<aside>
+    	    <ul class="more-deals">
+		<li>
+		<a href="/pages/viewCoupon.php?coupId=<?php echo $Coupon4['COUP_ID']; ?>">
+                   <div class="crop">
+                       <img src="<?php echo $Coupon4['COUP_IMGLOC']; ?>" alt="Rock Climbing" />
+                    </div>
+                    <?php echo $Coupon4['COUP_NAME']; ?> - $<?php echo $Coupon4['COUP_PRICE']; ?>
+                </a>
+		</li>
+	    </ul>
+	    <h2>More Deals</h2>
+    	    <ul class="more-deals">
+    	        <li>
+		<a href="/pages/viewCoupon.php?coupId=<?php echo $Coupon1['COUP_ID']; ?>">
+    	           <div class="crop">
+    	               <img src="<?php echo $Coupon1['COUP_IMGLOC']; ?>" alt="Rock Climbing" />
+    	            </div>
+    	            <?php echo $Coupon1['COUP_NAME']; ?> - $<?php echo $Coupon1['COUP_PRICE']; ?>
+		</a>
+    	        </li>
+                <li>
+                <a href="/pages/viewCoupon.php?coupId=<?php echo $Coupon2['COUP_ID']; ?>">
+		   <div class="crop">
+                       <img src="<?php echo $Coupon2['COUP_IMGLOC']; ?>" alt="Rock Climbing" />
+                    </div>
+                    <?php echo $Coupon2['COUP_NAME']; ?> - $<?php echo $Coupon2['COUP_PRICE']; ?>
+		</a>
+                </li>
+                <li>
+		<a href="/pages/viewCoupon.php?coupId=<?php echo $Coupon3['COUP_ID']; ?>">
+                   <div class="crop">
+                       <img src="<?php echo $Coupon3['COUP_IMGLOC']; ?>" alt="Rock Climbing" />
+                    </div>
+                    <?php echo $Coupon3['COUP_NAME']; ?> - $<?php echo $Coupon3['COUP_PRICE']; ?>
+                </a>
+		</li>
+    	    </ul>
+
+
+
+
+
+
+
+2012-05-09 09:22                sponsoredDeals.php                Page 2
+
+
+    	</aside>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                    style.css                     Page 1
+
+
+/*Universal Styles*/
+a{
+    color: #545454;
+    text-decoration: none;
+}
+
+.button{
+    background-color: #00eb76;
+    border: 0px;
+    color: #f8f9ec;
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 5px;
+    padding: 10px 0;
+    text-decoration: none;
+    width: 100%;
+}
+
+.button, .crop, nav li.active, nav a:hover{
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+}
+
+article{
+    float:left;
+    margin-right: 30px;
+    width: 540px;
+}
+
+aside{
+    float: right;
+    width: 330px;
+}
+
+aside h2{
+    border-bottom: 1px solid #545454;
+    margin-bottom: 6px;
+}
+
+aside img{
+    width: 330px;
+}
+
+body{
+    background: #f8f9ee url('../images/background.jpg') repeat top left;
+    color: #545454;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    margin: 30px 0 0 0;
+}
+
+footer{
+    margin: 0 auto 30px;
+    width: 900px;
+
+
+
+
+
+
+
+2012-05-09 09:22                    style.css                     Page 2
+
+
+}
+
+footer div{
+    overflow: hidden;
+    width: 900px;
+}
+
+footer nav, footer ul{
+    margin: 0 0 0px 0;
+}
+
+h1, h2, h3{
+    margin: 0;
+}
+
+h1{
+    font-size: 24px;
+}
+
+h2{
+    font-size: 18px;
+}
+
+header, #content{
+    width: 900px;
+    margin: 0 auto;
+}
+
+header{
+    border-bottom: 1px solid #545454;
+}
+
+header a {
+    float:left;
+}
+
+li{
+    float:left;
+    list-style:none;
+    padding: 0;
+}
+
+aside, header, #content, #coupon-image, .crop{
+    overflow: hidden;
+}
+
+nav{
+    float:right;
+    margin:105px 0 30px;
+}
+
+nav{
+    overflow: hidden;
+}
+
+nav a:visited{
+
+
+
+
+
+
+
+2012-05-09 09:22                    style.css                     Page 3
+
+
+    color: #545454;
+}
+
+nav li{
+    padding: 5px 7px;
+}
+
+nav li.active, nav a:hover{
+    background: #e2e3d8;
+}
+
+nav ul{
+    margin: 0;
+    padding: 0px;
+}
+
+nav a:active{
+    color: #545454;
+}
+
+p{
+    font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+    line-height: 150%;
+}
+
+ul{
+    float:right;
+}
+
+#content{
+    border-bottom: 1px solid #545454;
+    margin: 30px auto;
+}
+/*End Universal Styles*/
+
+/*Coupon Page Styles*/
+#coupon-description{
+    float:left;
+    margin: 15px 15px 0 0;
+    width: 320px;
+}
+
+#coupon-description p{
+    margin-top:0px;
+}
+
+#coupon-image{
+    max-height: 540px;
+    width: 540px;
+}
+
+#coupon-image img{
+   margin-bottom: -3px;
+   width: 100%;
+}
+
+
+
+
+
+
+
+
+2012-05-09 09:22                    style.css                     Page 4
+
+
+#coupon-pricing{
+    float: right;
+    margin-top: 15px;
+    text-align: center;
+    width: 200px;
+}
+
+#coupon-pricing h1{
+    color: #00eb76;
+    font-size: 24px;
+}
+
+#coupon-pricing h3{
+    font-size: 18px;
+}
+
+#coupon-pricing > h3{
+    font-size: 14px;
+    font-weight: normal;
+}
+
+#coupon-pricing li{
+    margin: 0 auto;
+    float: none;
+}
+
+#coupon-pricing ul{
+    margin-top: 15px;
+    padding: 0;
+    width: 100%;
+}
+
+.more-deals{
+    margin-top: 0px;
+    width: 330px;
+}
+
+.more-deals, .more-deals li{
+    width: 330px;
+}
+
+.more-deals li{
+    margin: 0 0 15px;
+}
+
+.more-deals .crop{
+    height: 150px;
+    margin-bottom: 5px;
+    width: 330px;
+}
+
+#sponsored-deal{
+    background: url('../images/beach.jpg');
+    background-position: 0px;
+    -webkit-border-radius: 6px 6px 0 0;
+       -moz-border-radius: 6px 6px 0 0;
+
+
+
+
+
+
+
+2012-05-09 09:22                    style.css                     Page 5
+
+
+            border-radius: 6px 6px 0 0;
+    color: #f8f9ec;
+    height: 90px;
+    padding: 15px;
+}
+
+#sponsored-deal-link{
+    background: #e2e3d8;
+    border-top: 1px solid #545454;
+    -webkit-border-radius: 0 0 6px 6px;
+       -moz-border-radius: 0 0 6px 6px;
+            border-radius: 0 0 6px 6px;
+    margin-bottom: 20px;
+    padding: 5px 15px;
+    text-align: right;
+}
+
+#sponsored-deal-link a{
+    color: #545454;
+    text-decoration: underline;
+}
+/*End Coupon Page Styles*/
+
+/*About Us Page Styles*/
+#about{
+	margin: 0 auto;
+	width: 330px;
+}
+
+#about h1{
+    color: #fe72a5;
+    margin-bottom: 5px;
+}
+
+#about li{
+    float: none;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+#about p{
+    background: #e2e3d8;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+       -moz-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+            box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+    float: none;
+    margin: 0 auto 30px;
+    overflow: hidden;
+    padding: 15px;
+    width: 300px;
+}
+
+#about input{
+
+
+
+
+
+
+
+2012-05-09 09:22                    style.css                     Page 6
+
+
+    border: 1px solid #a5a69e;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+       -moz-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+            box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+    color: #545454;
+    font-size: 18px;
+    height: 15px;
+    padding: 10px;
+}
+
+#about input[type=text]{
+    width: 278px;
+}
+
+#about input[type=submit]{
+    background: #FE72A5;
+    border: 0;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
+    color: #f7fff4;
+    float: right;
+    font-size: 18px;
+    font-weight: bold;
+    height: 40px;
+    width: 90px;
+}
+
+/*Contact Us Page Styes*/
+#contact{
+        margin: 0 auto;
+        width: 330px;
+}
+
+#contact h1{
+    color: #fe72a5;
+    margin-bottom: 5px;
+}
+
+#contact li{
+    float: none;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+#contact p{
+    background: #e2e3d8;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+       -moz-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+            box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+
+
+
+
+
+
+
+2012-05-09 09:22                    style.css                     Page 7
+
+
+    float: none;
+    margin: 0 auto 30px;
+    overflow: hidden;
+    padding: 15px;
+    width: 300px;
+}
+
+#contact input{
+    border: 1px solid #a5a69e;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+       -moz-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+            box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+    color: #545454;
+    font-size: 18px;
+    height: 15px;
+    padding: 10px;
+
+}
+
+#contact input[type=text], #contact.no-margin-input input[type=password]{
+    margin-bottom: -10px;
+    height: 40px;
+    padding: 0px 0 0px 5px;
+    width: 272px;
+}
+
+#contact.small{
+    width: 200px;
+}
+
+#contact.no-margin-input select{
+    margin-top: 20px;
+}
+
+#contact.no-margin-input {
+    width: 500px;
+}
+
+#contact.no-margin-input input[type=text], #contact.no-margin-input input[type=password]{
+    
+    margin: 0px 0 10px 0;
+}
+
+#contact label{
+    margin-bottom: 30px;
+    padding-right: 5px;
+}
+
+#contact input[type=submit]{
+    background: #FE72A5;
+    border: 0;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+
+
+
+
+
+
+
+2012-05-09 09:22                    style.css                     Page 8
+
+
+            box-shadow: none;
+    color: #f7fff4;
+    float: right;
+    font-size: 18px;
+    font-weight: bold;
+    height: 40px;
+    margin: 20px 0 30px;
+    width: 90px;
+}
+
+/*Register Page Styles*/
+#register{
+    margin: 0 auto;
+    width: 330px;
+}
+
+#register h1{
+    color: #fe72a5;
+    margin-bottom: 5px;
+}
+
+#register li{
+    float: none;
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+#register ul{
+    background: #e2e3d8;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+       -moz-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+            box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+    float: none;
+    margin: 0 auto 30px;
+    overflow: hidden;
+    padding: 15px;
+    width: 300px;
+}
+
+#register input{
+    border: 1px solid #a5a69e;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+       -moz-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+            box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+    color: #545454;
+    font-size: 18px;
+    height: 40px;
+}
+
+#register input[type=text], #register input[type=password]{
+
+
+
+
+
+
+
+2012-05-09 09:22                    style.css                     Page 9
+
+
+    padding-left: 10px;
+    width: 300px;
+}
+
+#register input[type=submit]{
+    background: #FE72A5;
+    border: 0;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
+    color: #f7fff4;
+    float: right;
+    font-size: 18px;
+    font-weight: bold;
+    height: 40px;
+    line-height: 4px;
+    width: 90px;
+}
+
+
+/* Shopping cart styles */
+#cart{
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+#cart a{
+    text-decoration: underline;
+}
+#cart h2{
+    font-size: 22px;
+    margin: 0px 0px 20px 0px;
+}
+#cart table{
+    border: 0px;
+    border-collapse:collapse;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+#cart td{
+    border: 0px;
+    border-bottom: 1px solid #E8E8D3;
+    padding: 5px;
+}
+#cart td:last-child, #cart th:last-child{
+    text-align:right;
+}
+#cart td.deal{
+    line-height: 50px;
+    padding: 5px 0;
+}
+#cart th{
+    border: 0px;
+    text-align: left;
+    padding: 5px;
+}
+
+
+
+
+
+
+
+2012-05-09 09:22                    style.css                    Page 10
+
+
+#cart tr:last-child td{
+    border-bottom: 0px;
+}
+#cart .button{
+    background-color: #fde540;
+    display: block;
+    float: right;
+    text-align: center;
+    width: 200px;
+}
+#cart .crop, #quantity .crop{
+    float:left;
+    margin: 0px 10px 0px 0px;
+}
+#cart .crop, #cart .crop img, #quantity .crop, #quantity .crop img{
+    height: 50px;
+     width: 50px;
+}
+#cart .crop img{
+    width: auto;
+}
+#cart .quantity{
+    text-align: center;
+}
+#cart .total td{
+    border: 0px;
+}
+
+/* End Shopping cart styles */
+
+/* Quantity page styles */
+
+#quantity{
+    margin: 0 auto 30px;
+    overflow: hidden;
+    width: 365px;
+}
+#quantity h1{
+    color: #FE72A5;
+}
+input.button{
+    float: right;
+    width: 200px;
+}
+/* End Quantity page styles */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                 style.mobile.css                 Page 1
+
+
+/*Universal Styles*/
+a{
+    color: #545454;
+    text-decoration: none;
+}
+
+a.button{
+    background-color: #00eb76;
+    color: #f8f9ec;
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 5px;
+    padding: 10px 0;
+    text-decoration: none;
+    width: 100%;
+}
+
+a.button, .crop, nav li.active, nav a:hover{
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+}
+
+article{
+    float:none;
+    margin-right: 30px;
+    width: 540px;
+}
+
+aside{
+    float: none;
+    width: 330px;
+}
+
+aside h2{
+    border-bottom: 1px solid #545454;
+}
+
+body{
+    background: #f8f9ee url('../images/background.jpg') repeat top left;
+    color: #545454;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    margin: 30px 0 0 0;
+}
+
+footer{
+    margin: 0 auto;
+    width: 900px;
+}
+
+footer nav{
+    margin: 0 0 30px 0;
+}
+
+
+
+
+
+
+
+
+2012-05-09 09:22                 style.mobile.css                 Page 2
+
+
+h1, h2, h3{
+    margin: 0;
+}
+
+h1{
+    font-size: 24px;
+}
+
+h2{
+    font-size: 18px;
+}
+
+header, #content{ 
+    margin: 0 auto;
+}
+
+header{
+    border-bottom: 1px solid #545454;
+}
+
+header a {
+    float:left;
+}
+
+li{
+    float:none;
+    list-style:none;
+    padding: 0;
+}
+
+aside, header, #content, #coupon-image, .crop{
+    overflow: hidden;
+}
+
+nav{
+    float:right;
+    margin:105px 0 30px;
+}
+
+nav{
+    overflow: hidden;
+}
+
+nav a:visited{
+    color: #545454;
+}
+
+nav li{
+    padding: 5px 7px;
+}
+
+nav li.active, nav a:hover{
+    background: #e2e3d8;
+}
+
+nav ul{
+
+
+
+
+
+
+
+2012-05-09 09:22                 style.mobile.css                 Page 3
+
+
+    margin: 0;
+}
+
+nav a:active{
+    color: #545454;
+}
+
+p{
+    font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+    line-height: 150%;
+}
+
+ul{
+    float:none;
+}
+
+#content{
+    margin: 30px auto;
+}
+/*End Universal Styles*/
+
+/*Coupon Page Styles*/
+#coupon-description{
+    float:none;
+    margin: 15px 15px 0 0;
+    width: 320px;
+}
+
+#coupon-description p{
+    margin-top:0px;
+}
+
+#coupon-image{
+    height: 150px;
+    width: 540px;
+}
+
+#coupon-pricing{
+    float: none;
+    margin-top: 15px;
+    text-align: center;
+    width: 200px;
+}
+
+#coupon-pricing h1{
+    color: #00eb76;
+    font-size: 24px;
+}
+
+#coupon-pricing h3{
+    font-size: 18px;
+}
+
+#coupon-pricing > h3{
+    font-size: 14px;
+    font-weight: normal;
+
+
+
+
+
+
+
+2012-05-09 09:22                 style.mobile.css                 Page 4
+
+
+}
+
+#coupon-pricing li{
+    margin-left: 14px;
+}
+
+#coupon-pricing li:first-child{
+    width: 45px;
+    margin-left: 0;
+}
+
+#coupon-pricing ul{
+    margin-top: 15px;
+    padding: 0;
+}
+
+#more-deals{
+    margin-top: 6px;
+    width: 330px;
+}
+
+#more-deals, #more-deals li{
+    width: 330px;
+}
+
+#more-deals li{
+    margin: 0 0 15px;
+}
+
+#more-deals .crop{
+    height: 150px;
+    margin-bottom: 5px;
+    width: 330px;
+}
+
+#sponsored-deal{
+    background: url('../images/beach.jpg');
+    background-position: 0px;
+    -webkit-border-radius: 6px 6px 0 0;
+       -moz-border-radius: 6px 6px 0 0;
+            border-radius: 6px 6px 0 0;
+    color: #f8f9ec;
+    height: 90px;
+    padding: 15px;
+}
+
+#sponsored-deal-link{
+    background: #e2e3d8;
+    border-top: 1px solid #545454;
+    -webkit-border-radius: 0 0 6px 6px;
+       -moz-border-radius: 0 0 6px 6px;
+            border-radius: 0 0 6px 6px;
+    margin-bottom: 20px;
+    padding: 5px 15px;
+    text-align: right;
+}
+
+
+
+
+
+
+
+2012-05-09 09:22                 style.mobile.css                 Page 5
+
+
+
+#sponsored-deal-link a{
+    color: #545454;
+    text-decoration: underline;
+}
+/*End Coupon Page Styles*/
+
+/*About Us Page Styles*/
+#about{
+	margin: 0 auto;
+	width: 330px;
+}
+
+#about h1{
+    color: #fe72a5;
+    margin-bottom: 5px;
+}
+
+#about li{
+    float: none;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+#about p{
+    background: #e2e3d8;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+       -moz-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+            box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+    float: none;
+    margin: 0 auto 30px;
+    overflow: hidden;
+    padding: 15px;
+    width: 300px;
+}
+
+#about input{
+    border: 1px solid #a5a69e;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+       -moz-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+            box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+    color: #545454;
+    font-size: 18px;
+    height: 15px;
+    padding: 10px;
+}
+
+#about input[type=text]{
+    width: 278px;
+}
+
+
+
+
+
+
+
+2012-05-09 09:22                 style.mobile.css                 Page 6
+
+
+
+#about input[type=submit]{
+    background: #FE72A5;
+    border: 0;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
+    color: #f7fff4;
+    float: right;
+    font-size: 18px;
+    font-weight: bold;
+    height: 40px;
+    width: 90px;
+}
+
+/*Contact Us Page Styes*/
+#contact{
+        margin: 0 auto;
+        width: 330px;
+}
+
+#contact h1{
+    color: #fe72a5;
+    margin-bottom: 5px;
+}
+
+#contact li{
+    float: none;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+#contact p{
+    background: #e2e3d8;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+       -moz-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+            box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+    float: none;
+    margin: 0 auto 30px;
+    overflow: hidden;
+    padding: 15px;
+    width: 300px;
+}
+
+#contact input{
+    border: 1px solid #a5a69e;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+       -moz-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+            box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+    color: #545454;
+
+
+
+
+
+
+
+2012-05-09 09:22                 style.mobile.css                 Page 7
+
+
+    font-size: 18px;
+    height: 15px;
+    padding: 10px;
+}
+
+#contact input[type=text]{
+    width: 278px;
+}
+
+#contact input[type=submit]{
+    background: #FE72A5;
+    border: 0;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
+    color: #f7fff4;
+    float: right;
+    font-size: 18px;
+    font-weight: bold;
+    height: 40px;
+    width: 90px;
+}
+
+/*Register Page Styles*/
+#register{
+    margin: 0 auto;
+    width: 330px;
+}
+
+#register h1{
+    color: #fe72a5;
+    margin-bottom: 5px;
+}
+
+#register li{
+    float: none;
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+#register ul{
+    background: #e2e3d8;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+       -moz-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+            box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+    float: none;
+    margin: 0 auto 30px;
+    overflow: hidden;
+    padding: 15px;
+    width: 300px;
+}
+
+#register input{
+
+
+
+
+
+
+
+2012-05-09 09:22                 style.mobile.css                 Page 8
+
+
+    border: 1px solid #a5a69e;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+       -moz-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+            box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+    color: #545454;
+    font-size: 18px;
+    height: 8px;
+    padding: 18px 10px 17px;
+}
+
+#register input[type=text], #register input[type=password]{
+    width: 300px;
+}
+
+#register input[type=submit]{
+    background: #FE72A5;
+    border: 0;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
+    color: #f7fff4;
+    float: right;
+    font-size: 18px;
+    font-weight: bold;
+    height: 40px;
+    line-height: 4px;
+    width: 90px;
+}
+
+
+/* Shopping cart styles */
+#cart{
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+#cart h2{
+    font-size: 22px;
+    margin: 0px 0px 20px 0px;
+}
+#cart table{
+    border: 0px;
+    border-collapse:collapse;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+#cart td{
+    border: 0px;
+    border-bottom: 1px solid #E8E8D3;
+}
+#cart td:last-child, #cart th:last-child{
+    text-align:right;
+}
+
+
+
+
+
+
+
+2012-05-09 09:22                 style.mobile.css                 Page 9
+
+
+#cart td.deal{
+    line-height: 50px;
+    padding: 5px 0;
+}
+#cart th{
+    bordeR: 0px;
+    text-align: left;
+}
+#cart tr:last-child td{
+    border-bottom: 0px;
+}
+#cart .button{
+    background-color: #fde540;
+    display: block;
+    float: right;
+    text-align: center;
+    width: 200px;
+}
+#cart .crop{
+    float:left;
+    margin: 0px 10px 0px 0px;
+}
+#cart .crop, #cart .crop img{
+    height: 50px;
+     width: 50px;
+}
+#cart .crop img{
+    width: auto;
+}
+#cart .quantity{
+    text-align: center;
+}
+#cart .total td{
+    border: 0px;
+}
+
+/* End Shopping cart styles */
+
+ /* Stage Buttons */
+.btn{
+  	border: 1px solid #555;
+  	-webkit-border-radius: 5px;
+  	border-radius: 5px;
+  	text-align:center;
+  	display:block;
+  	background:#444;
+  	width:150px;
+  	color:#9ab;
+  	font-size:1.1em;
+  	text-decoration:none;
+  	padding:1.2em 0;
+	float:none;
+  	margin:3px 0px 3px 5px;
+  }
+.btn.large{
+  	width:308px;
+
+
+
+
+
+
+
+2012-05-09 09:22                style.mobile.css                 Page 10
+
+
+  	padding:1.2em 0;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                   sunshine.sql                   Page 1
+
+
+DROP DATABASE IF EXISTS SUNSHINEDEALS;
+DROP DATABASE IF EXISTS sunshinedeals;
+
+CREATE DATABASE sunshinedeals;
+CREATE USER 'shinetheweb'@'localhost' IDENTIFIED BY 'urmysunshine';
+
+USE sunshinedeals;
+GRANT ALL ON sunshinedeals.* TO 'shinetheweb'@'localhost';
+
+DROP TABLE IF EXISTS ACCOUNTS;
+DROP TABLE IF EXISTS CART;
+DROP TABLE IF EXISTS PURCHASES;
+DROP TABLE IF EXISTS LOCATIONS;
+DROP TABLE IF EXISTS COUPONS;
+
+CREATE TABLE ACCOUNTS (
+	ACCT_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	ACCT_NAME VARCHAR(50) UNIQUE,
+	ACCT_PASS varchar(40),
+	ACCT_EMAIL varchar(32) UNIQUE,
+	ACCT_SQUEST varchar(100),
+	ACCT_SANSER varchar(100),
+	ACCT_TYPE INT NOT NULL,
+	ACCT_JOIN TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE COUPONS (
+	COUP_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	COUP_NAME varchar(50) UNIQUE,
+	COUP_TOTAL INT,
+	COUP_LEFT INT,
+	COUP_PRICE DECIMAL(15,2),
+	COUP_CATNAME VARCHAR(30),
+	COUP_VENDOR VARCHAR(50),
+	COUP_DESC VARCHAR(1000),
+	COUP_IMGLOC VARCHAR(200),
+	COUP_START TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	COUP_EXPR TIMESTAMP
+);
+
+CREATE TABLE CART (
+	CART_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	CART_ACCT_ID INT NOT NULL,
+	CART_COUP_ID INT NOT NULL,
+	CART_QUAN INT,
+	CART_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE PURCHASES (
+	PUR_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	PUR_ACCT_ID INT NOT NULL,
+	PUR_VENDNAME VARCHAR(50) NOT NULL,
+	PUR_COUP_ID INT NOT NULL,
+	PUR_QUAN INT NOT NULL,
+	PUR_PRICE DECIMAL(15,2) NOT NULL,
+	PUR_PAID DECIMAL(15,2) NOT NULL,
+
+
+
+
+
+
+
+2012-05-09 09:22                   sunshine.sql                   Page 2
+
+
+	PUR_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PUR_BADD varchar(50) NOT NULL,
+	PUR_BCTY varchar(30) NOT NULL,
+	PUR_BSTA char(2) NOT NULL,
+	PUR_BZIP char(5) NOT NULL,
+	PUR_BNAME varchar(50) NOT NULL,
+	PUR_CCN varchar(50) NOT NULL,
+	PUR_CCLFN char(5) NOT NULL,
+	PUR_CCEX DATE NOT NULL,
+	PUR_CCSN varchar(50) NOT NULL
+);
+
+CREATE UNIQUE INDEX ACCT_INDEX ON ACCOUNTS(ACCT_ID, ACCT_NAME);
+CREATE UNIQUE INDEX COUP_INDEX ON COUPONS(COUP_ID, COUP_NAME);
+CREATE INDEX CART_INDEX ON CART(CART_ID ASC);
+CREATE INDEX PUR_INDEX ON PURCHASES(PUR_ID ASC);
+
+ALTER TABLE CART ADD CONSTRAINT CARTFK_ACCT FOREIGN KEY(CART_ACCT_ID) REFERENCES ACCOUNTS(ACCT_ID);
+ALTER TABLE CART ADD CONSTRAINT CARTFK_COUP FOREIGN KEY(CART_COUP_ID) REFERENCES COUPONS(COUP_ID);
+ALTER TABLE PURCHASES ADD CONSTRAINT PURFK_ACCT FOREIGN KEY(PUR_ACCT_ID) REFERENCES ACCOUNTS(ACCT_ID);
+ALTER TABLE PURCHASES ADD CONSTRAINT PURFK_COUP FOREIGN KEY(PUR_COUP_ID) REFERENCES COUPOUNS(COUP_ID);
+
+INSERT INTO ACCOUNTS (ACCT_NAME, ACCT_PASS, ACCT_EMAIL, ACCT_SQUEST, ACCT_SANSER, ACCT_TYPE)
+	VALUES ('Lamborghini',SHA1(MD5('Aventador')), 'lambo@lamborghini.com', 'What is your logo?', SHA1(MD5('A Bull.')), 1);
+INSERT INTO ACCOUNTS (ACCT_NAME, ACCT_PASS, ACCT_EMAIL, ACCT_SQUEST, ACCT_SANSER, ACCT_TYPE)
+	VALUES ('Michelin',SHA1(MD5('the wheel')), 'tires@michelin.com', 'Who need us?', SHA1(MD5('Things that move')), 1);
+INSERT INTO ACCOUNTS (ACCT_NAME, ACCT_PASS, ACCT_EMAIL, ACCT_SQUEST, ACCT_SANSER, ACCT_TYPE)
+	VALUES ('Ikea',SHA1(MD5('HomeLiving')), 'products@ikea.com', 'What is my nationality?', SHA1(MD5('Swiss')), 1);
+INSERT INTO ACCOUNTS (ACCT_NAME, ACCT_PASS, ACCT_EMAIL, ACCT_SQUEST, ACCT_SANSER, ACCT_TYPE)
+	VALUES ('Johnson & Johnson Baby',SHA1(MD5('Adorable')), 'baby@jsandjs.com', 'Who do we tailor for?', SHA1(MD5('Babies')), 1);
+INSERT INTO ACCOUNTS (ACCT_NAME, ACCT_PASS, ACCT_EMAIL, ACCT_SQUEST, ACCT_SANSER, ACCT_TYPE)
+	VALUES ('Boeing',SHA1(MD5('BuyA747')), 'buyaplane@boeing.com', 'What do we make?', SHA1(MD5('We make planes')), 1);
+INSERT INTO ACCOUNTS (ACCT_NAME, ACCT_PASS, ACCT_EMAIL, ACCT_SQUEST, ACCT_SANSER, ACCT_TYPE)
+	VALUES ('Hawaiian Airlines',SHA1(MD5('vacation')), 'flyaa@ha.com', 'Who do we serve?', SHA1(MD5('People who travel')), 1);
+INSERT INTO ACCOUNTS (ACCT_NAME, ACCT_PASS, ACCT_EMAIL, ACCT_SQUEST, ACCT_SANSER, ACCT_TYPE)
+	VALUES ('Krispy Kreme',SHA1(MD5('Doughnuts')), 'doughnuts@krispyk.com', 'Who loves us?', SHA1(MD5('The Police')), 1);
+INSERT INTO ACCOUNTS (ACCT_NAME, ACCT_PASS, ACCT_EMAIL, ACCT_SQUEST, ACCT_SANSER, ACCT_TYPE)
+	VALUES ('Nintendo',SHA1(MD5('Legend')), 'gaming@nintendo.com', 'Whats our motto?', SHA1(MD5('Wii Like to Play')), 1);
+INSERT INTO ACCOUNTS (ACCT_NAME, ACCT_PASS, ACCT_EMAIL, ACCT_SQUEST, ACCT_SANSER, ACCT_TYPE)	
+	VALUES ('Epic Games',SHA1(MD5('WARS')), 'gaming@egames.com', 'What are we selling?', SHA1(MD5('Gears of War')), 1);
+INSERT INTO ACCOUNTS (ACCT_NAME, ACCT_PASS, ACCT_EMAIL, ACCT_SQUEST, ACCT_SANSER, ACCT_TYPE)
+	VALUES ('Scientists',SHA1(MD5('LHC')), 'LHC@science.com', 'Whats out purpose?', SHA1(MD5('Build the universe')), 1);
+INSERT INTO ACCOUNTS (ACCT_NAME, ACCT_PASS, ACCT_EMAIL, ACCT_SQUEST, ACCT_SANSER, ACCT_TYPE)
+	VALUES ('General Dynamics Land Systems',SHA1(MD5('Abrams')), 'tanks@gdls.mil', 'What are we selling?', SHA1(MD5('Machines of War')), 1);
+INSERT INTO ACCOUNTS (ACCT_NAME, ACCT_PASS, ACCT_EMAIL, ACCT_SQUEST, ACCT_SANSER, ACCT_TYPE)
+	VALUES ('Lockheed Martin',SHA1(MD5('WARS')), 'fjets@lockheedmartin.mil', 'What are we selling?', SHA1(MD5('Fighter Jets')), 1);
+INSERT INTO ACCOUNTS (ACCT_NAME, ACCT_PASS, ACCT_EMAIL, ACCT_SQUEST, ACCT_SANSER, ACCT_TYPE)
+	VALUES ('Hasselblad USA',SHA1(MD5('Camera')), 'prophoto@Hasselblad.com', 'What are we selling?', SHA1(MD5('Professional Cameras')), 1);
+
+
+
+
+
+INSERT INTO COUPONS (COUP_NAME, COUP_TOTAL, COUP_LEFT, COUP_PRICE, COUP_CATNAME, COUP_VENDOR, COUP_DESC, COUP_IMGLOC, COUP_EXPR)
+	VALUES ('Lamborgini Aventador LP700-4',10,10,380000.00,'Automotive','Lamborghini','The Lamborgini Aventador is a two-door, two-seater supercar. Named after a champion bull, the Aventador is serious because it is powered by a 6.5L V12 that generates a mind-blowing 690 BHP and 690 Nm of torque. 0 to 60 only takes 2.9 seconds and has an estimated top speed of 217 MPH. Original Price is $400,000. Do you think you can grab this bull by its horns?', '../images/coupons/aventador.jpg', '2012-06-05 11:59PM');
+INSERT INTO COUPONS (COUP_NAME, COUP_TOTAL, COUP_LEFT, COUP_PRICE, COUP_CATNAME, COUP_VENDOR, COUP_DESC, COUP_IMGLOC, COUP_EXPR)
+
+
+
+
+
+
+
+2012-05-09 09:22                   sunshine.sql                   Page 3
+
+
+	VALUES ('Michelin Tires',80,80,85.00,'Automotive','Michelin','If it was not obvious already, we make tires for anything and everything, including but not limited to automobiles, motorcycles, aircrafts, and the Space Shuttle. Our specially made tires are <i>green</i> which reduce fuel consumption, increases life expectancy, and better grip on any terrain. Safe, long lasting, and fairly cheap, what are you waiting for? Original Price: $100.00. Buy Michelin Defender Tires.', '../images/coupons/michelindefender.jpg', '2012-06-05 11:59PM');
+INSERT INTO COUPONS (COUP_NAME, COUP_TOTAL, COUP_LEFT, COUP_PRICE, COUP_CATNAME, COUP_VENDOR, COUP_DESC, COUP_IMGLOC, COUP_EXPR)
+	VALUES ('Folldal Bed',50,50,899.00,'Home','Ikea','The Folldal bed comes with a bed frame in Grann white and a king mattress. The Bed comes comes with soft, hardwearing, and simple maintenance leather that lasts long and easy to maintain. Just wipe clean with a damp cloth and it will be good as new.  The bed sides are also adjustable to allow mattresses of different shapes and heights to comfortable fit inside. Some Assembly Required. Original Price: $999.00. Sleep in comfort now.', '../images/coupons/folldalbed.jpg', '2012-06-05 11:59PM');
+INSERT INTO COUPONS (COUP_NAME, COUP_TOTAL, COUP_LEFT, COUP_PRICE, COUP_CATNAME, COUP_VENDOR, COUP_DESC, COUP_IMGLOC, COUP_EXPR)
+	VALUES ('Johnson & Johnson Baby Lotion',1500,1500,3.99,'Baby','Johnson & Johnson Baby','The new Johnson and Johnson Baby Lotion is the number 1 choice in hospitals and moms everywhere. It has the unmistakable baby fresh scent that is gentle, mild on the skin, and pleasant for babies. Its fast absorbing formula leaves the skin feeling soft and smooth, not oily or slippery. Instructions: gently apply the lotion on the baby. Original Price: $5.99. Make your baby feel soft!', '../images/coupons/jandjbl.jpg', '2012-06-05 11:59PM');
+INSERT INTO COUPONS (COUP_NAME, COUP_TOTAL, COUP_LEFT, COUP_PRICE, COUP_CATNAME, COUP_VENDOR, COUP_DESC, COUP_IMGLOC, COUP_EXPR)
+	VALUES ('Boeing 747-8F',3,3,319000000.00,'Travel','Boeing','Ever been to the airport and got tired of waiting in long lines to check in? Are you finding it hard to find timing that work around your schedule?  WELL DO NOT WORRY! The iconic Boeing 747 is 42 years old. This new 747-8F is a fuel-efficient and maneuverable aircraft. Since you own it, you no longer have to worry about tickets or timings. Simply call your pilot and tell him or her that you need to be somewhere now. The 747-8F is large and spacious so you can take anything with you. Original Price: $320 million. Fly like POTUS and the Space Shuttle.', '../images/coupons/boeing747.jpg', '2012-06-05 11:59PM');
+INSERT INTO COUPONS (COUP_NAME, COUP_TOTAL, COUP_LEFT, COUP_PRICE, COUP_CATNAME, COUP_VENDOR, COUP_DESC, COUP_IMGLOC, COUP_EXPR)
+	VALUES ('Flight to Hawaii',35,35,199.99,'Travel','Hawaiian Airlines','Are you getting bored and/or tired of work? Then you need a Vacation! Fly Hawaiian Airlines to Hawaii with your family for ten days of relaxation and fun. We are fast, friendly, and cheap so join us on your trip to Hawaii. Other companies get you there but we get you there without hassle, your choice. Other offers: 299.99. Fly Hawaiian Airlines Now!', '../images/coupons/hawaiianair.jpg', '2012-06-05 11:59PM');
+INSERT INTO COUPONS (COUP_NAME, COUP_TOTAL, COUP_LEFT, COUP_PRICE, COUP_CATNAME, COUP_VENDOR, COUP_DESC, COUP_IMGLOC, COUP_EXPR)
+	VALUES ('Krispy Kreme Glazed Doughnuts',75,75,5.99,'Food','Krispy Kreme','Are you hungry? Yes, skip a few sentences. No, continue reading. Krispy Kreme has been making doughnuts since 1937. We know how to make them doughnuts. We make them doughnuts delicious, mouth-watering, and warm. Are you hungry now? I hope so because we have two dozen Krispy Kreme glazed doughnuts for a discounted price. Available for everyone including the Police. Original Price: $7.99 each. Come and get your doughnuts.', '../images/coupons/kkd.jpg', '2012-06-05 11:59PM');
+INSERT INTO COUPONS (COUP_NAME, COUP_TOTAL, COUP_LEFT, COUP_PRICE, COUP_CATNAME, COUP_VENDOR, COUP_DESC, COUP_IMGLOC, COUP_EXPR)
+	VALUES ('The Legend of Zelda',20,20,19.99,'Gaming','Nintendo','Love games? Have no life? I guess not because you are reading this description. Kidding aside, Zelda is a classic Japanese RPG that has touched the hearts of many generations worldwide. We here with a classic Zelda game remake for the 3DS platform at a exclusive price for those young and old to reminisce.', '../images/coupons/lozelda.jpg', '2012-06-05 11:59PM');
+INSERT INTO COUPONS (COUP_NAME, COUP_TOTAL, COUP_LEFT, COUP_PRICE, COUP_CATNAME, COUP_VENDOR, COUP_DESC, COUP_IMGLOC, COUP_EXPR)
+	VALUES ('Gears of War 3',25,25,17.99,'Gaming','Epic Games','Is it the end of the world? Are muscular monsters with rifles knocking on your front door? Well great, we have just the game for you to immerse yourself in a reality of gory action where you either brutally kill monsters or get brutally killed.', '../images/coupons/gow3.jpg', '2012-06-05 11:59PM');
+INSERT INTO COUPONS (COUP_NAME, COUP_TOTAL, COUP_LEFT, COUP_PRICE, COUP_CATNAME, COUP_VENDOR, COUP_DESC, COUP_IMGLOC, COUP_EXPR)
+	VALUES ('Large Hadron Collider',1,1,9000000000.00,'Science','Scientists','Did you ever want to win the science fair? Have you ever wondered what would happen if you smashed multiple particles together at an extremely high velocity? Well now, you can! The Large Hadron Collider that you purchase will be an exact replica of the LHC built and operated by the European Organization for Nuclear Research (CERN). The LHC will lie in a tunnel that is 27 kilometers in circumference. Note that the LHC operates at operates at approximately 1.12 microjoules per nucleon. Original Price: Contact us for details. Buy an LHC and become the next famous scientist.', '../images/coupons/hadroncollider.jpg', '2012-06-05 11:59PM');
+INSERT INTO COUPONS (COUP_NAME, COUP_TOTAL, COUP_LEFT, COUP_PRICE, COUP_CATNAME, COUP_VENDOR, COUP_DESC, COUP_IMGLOC, COUP_EXPR)
+	VALUES ('M1A2 TUSK Abrams Tank',12,12,6100000.00,'Military','General Dynamics Land Systems','Named after General Creighton Abrams, the M1 is a highly mobile and heavily armored third generation main battle tank. Weighing at nearly 62 metric tons and a maximum speed of 35mph, this colossal beast can quickly change the outcome on a battlefield. Its primary and secondary armaments include a 105mm rifled cannon, 120mm smoothbore cannon, .50-cal machine gun that makes most enemies back down without a fight. Background checks may apply. Original price: $6.21 million. Get this and win some more battles.', '../images/coupons/m1abrams.png', '2012-06-05 11:59PM');
+INSERT INTO COUPONS (COUP_NAME, COUP_TOTAL, COUP_LEFT, COUP_PRICE, COUP_CATNAME, COUP_VENDOR, COUP_DESC, COUP_IMGLOC, COUP_EXPR)
+	VALUES ('F-22 Raptor',15,15,145000000,'Military','Lockheed Martin','The F-22 Raptor is a Stealth Air Superiority Strike Fighter that dominates the sky, war or not. Its stealth armor prevents most enemies to know what is happening until its already too late. Its thrust vectoring makes the F-22 Raptor outmaneuvers any and all other fighter jets. Its top speed of Mach 2.25 (1500 mph) and multiple armaments means that it has very little competition. Background checks required. Original price: $150 million. Get it now and own the sky!', '../images/coupons/f22.jpg', '2012-06-05 11:59PM');
+INSERT INTO COUPONS (COUP_NAME, COUP_TOTAL, COUP_LEFT, COUP_PRICE, COUP_CATNAME, COUP_VENDOR, COUP_DESC, COUP_IMGLOC, COUP_EXPR)
+	VALUES ('Hasselblad H4D-60',4,4,39995,'Photography','Hasselblad USA','The Hasselblad H4D-60 is probably the most expensive digital camera in the world. This DSLR camera has an astonishing 60 megapixel 40 x 54 mm sensor. Aided by the Absolute Position Lock processor, Hasselblad�s True Focus system allows the photographer to focus on the composition without constantly fiddling with the focus. The camera has a capture rate of 1.4 seconds per capture and shutter speed ranges from an 800th of a second to 32 seconds. Original Price: $41,995', '../images/coupons/hasselbladH4D-60.jpg', '2012-06-05 11:59PM');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22               testShoppingCart.php               Page 1
+
+
+<?php
+include '../template/headerPages.php';
+?>
+<header><script src="sorttable.js"></script></header>
+<div id="content">
+<div id="cart">
+<table border='1'>
+<tr align = left>
+<th><a href="testShoppingCart.php?sort=title">Title</a></th>
+<th><a href="testShoppingCart.php?sort=desc">Description</a></th>
+<th><a href="testShoppingCart.php?sort=price">Price</a></th>
+</tr>
+
+<?php
+include("connection.php");
+
+$result = "SELECT * FROM COUPONS";
+
+
+
+switch ($_REQUEST['sort'])
+{
+case 'id':
+  $result .= " ORDER BY COUP_ID";
+  break;
+case 'title':
+  $result .= " ORDER BY COUP_NAME";
+  break;
+case 'total':
+  $result .= " ORDER BY COUP_TOTAL";
+  break;
+case 'left':
+  $result .= " ORDER BY COUP_LEFT";
+  break;
+ case 'price':
+  $result .= " ORDER BY COUP_PRICE";
+  break;
+case 'category':
+  $result .= " ORDER BY COUP_CATNAME";
+  break;  
+case 'vendor':
+  $result .= " ORDER BY COUP_VENDOR";
+  break;
+case 'desc':
+  $result .= " ORDER BY COUP_DESC";
+  break;
+case 'start':
+  $result .= " ORDER BY COUP_START";
+  break;  
+case 'end':
+  $result .= " ORDER BY COUP_EXPR";
+  break;  
+default:
+
+}
+
+
+
+
+
+
+
+
+2012-05-09 09:22               testShoppingCart.php               Page 2
+
+
+//echo $result;
+	
+$table = "COUPONS";
+$result = mysql_query($result) or die(mysql_error());
+$sum = 0;
+
+//echo mysql_field_name($result, 0);//name of columns
+//echo mysql_num_fields($result);//num of columns
+
+while($row = mysql_fetch_array($result))
+  {
+  $test = $row['COUP_ID'];
+  $sum += $row['COUP_PRICE'];
+  echo "<tr>";
+  echo "<td>" . $row['COUP_NAME'] . "</td>";
+  echo "<td>" . $row['COUP_DESC'] . "</td>";
+  echo "<td>" . $row['COUP_PRICE'] . "</td>";
+  echo "</tr>";
+  }
+	echo "                <tr class='total'>
+                    <td></td>
+                    <td></td>
+                    <td>$" . (double)$sum . "</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Total</td>
+                </tr>";
+	echo "</table>";
+	echo"<a href='#' class='button'>Check-out</a>";
+include("connection.php");
+?>
+</div>
+</div>
+
+<?php
+        include '../template/footerPages.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                updateAccount.php                 Page 1
+
+
+<?php
+	include '../template/header.php';
+?>
+
+<div id="content">
+<div id="contact">
+
+<h1>Account Update</h1>
+
+<?php
+include("connection.php");
+
+$acctId = $_REQUEST['acctId'];
+$email = $_REQUEST['email'];
+$currentPwd = $_REQUEST['currentPwd'];
+$pwdA = $_REQUEST['pwdA'];
+$pwdB = $_REQUEST['pwdB'];
+$question = $_REQUEST['question'];
+$answer = $_REQUEST['answer'];
+
+$query = "SELECT * FROM ACCOUNTS WHERE ACCT_ID = $acctId";
+$result = mysql_query($query);
+$row = mysql_fetch_array($result);
+
+	if($row['ACCT_PASS']==sha1(md5($currentPwd))){
+		if($pwdA==$pwdB){
+			echo "Account has been updated.";
+			$pwdA = sha1(md5($pwdA));
+			if($answer != $row['ACCT_SANSER']){
+				$answer = sha1(md5($answer));
+			}
+			mysql_query("UPDATE ACCOUNTS SET ACCT_PASS='$pwdA', ACCT_EMAIL='$email' , ACCT_SQUEST='$question', ACCT_SANSER='$answer' WHERE ACCT_ID = $acctId") or die(mysql_error());
+		}else{
+			echo "New Password and Confirm Password needs to match.";
+		}
+	}else{
+		echo "Wrong Password";
+	}
+
+include("close.php");
+?>
+</div>
+</div>
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                 updateCoupon.php                 Page 1
+
+
+<?php
+	include("connection.php");
+
+	$coupId = $_REQUEST['coupId'];
+	$acctId = $_REQUEST['acctId'];
+
+	$title = $_REQUEST["title"];
+	$quantity = $_REQUEST["quantity"];
+	$left = $_REQUEST["left"];
+	$price = $_REQUEST["price"];
+	$category = $_REQUEST["category"];
+	$vName = $_REQUEST["vName"];
+	$description = $_REQUEST["description"];
+	$month = $_REQUEST["month"];
+	$day = $_REQUEST["day"];
+	$year = $_REQUEST["year"];
+	$hour = $_REQUEST["hour"];
+	$minute = $_REQUEST["minute"];
+	$sMonth = $_REQUEST["sMonth"];
+	$sDay = $_REQUEST["sDay"];
+	$sYear = $_REQUEST["sYear"];
+	$sHour = $_REQUEST["sHour"];
+	$sMinute = $_REQUEST["sMinute"];
+	$url = $_REQUEST["url"];
+	
+	echo "'$title', $quantity, $quantity, $price, '$category', '$vName', '$description', '2012-04-14 21:28:49', '2012-04-14 21:28:49'";
+
+	
+	mysql_query("UPDATE COUPONS SET COUP_NAME='$title', COUP_TOTAL='$quantity', COUP_LEFT='$left', COUP_PRICE='$price', COUP_CATNAME='$category', COUP_VENDOR='$vName', COUP_DESC='$description', COUP_IMGLOC='$url', COUP_START='$sYear-$sMonth-$sDay $sHour:$sDay:00', COUP_EXPR='$year-$month-$day $hour:$day:00' WHERE COUP_ID = $coupId");
+
+	include("close.php");
+
+?>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Refresh" content="5;url=inventory.php?acctId=<?php echo $acctId?>" />
+		<title>Coupon Information</title>
+	</head>
+	
+	<body>
+		<h1>Thank You</h1>
+		<p>
+			Your request has been processed.
+		</p>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                updateQuantity.php                Page 1
+
+
+<?php
+	include '../template/header.php';
+?>
+
+<div id="content">
+<div id="contact">
+
+<h1>Quantity Updated</h1>
+<p>
+<?php
+include("connection.php");
+
+$coupId = $_REQUEST['coupId'];
+$acctId = $_REQUEST['acctId'];
+$quantity = $_REQUEST['quantity'];
+
+$query = "SELECT * FROM CART WHERE CART_COUP_ID = $coupId AND CART_ACCT_ID = $acctId";
+$result = mysql_query($query) or die(mysql_error());
+$row = mysql_fetch_array($result) or die (mysql_error());
+$currentQuantity = $row['CART_QUAN'];
+
+if($quantity==0){
+	echo "Removing Coupon from Shopping Cart.";
+	mysql_query("DELETE FROM CART WHERE CART_ACCT_ID = $acctId AND CART_COUP_ID = $coupId") or die(mysql_error());
+	mysql_query("UPDATE COUPONS SET COUP_LEFT=COUP_LEFT+$currentQuantity WHERE COUP_ID=$coupId") or die(mysql_error());	
+}elseif($currentQuantity < $quantity){
+	$sum = $quantity - $currentQuantity;
+	echo "Increasing Quantity by $sum.";
+	mysql_query("UPDATE CART SET CART_QUAN=CART_QUAN+$sum WHERE CART_ACCT_ID=$acctId AND CART_COUP_ID = $coupId") or die(mysql_error());
+	mysql_query("UPDATE COUPONS SET COUP_LEFT=COUP_LEFT-$sum WHERE COUP_ID=$coupId") or die(mysql_error());
+}elseif($currentQuantity > $quantity){
+	$sum = $currentQuantity - $quantity;
+	echo "Decreasing Quantity by $sum.";
+	mysql_query("UPDATE CART SET CART_QUAN=CART_QUAN-$sum WHERE CART_ACCT_ID=$acctId AND CART_COUP_ID = $coupId") or die(mysql_error());
+	mysql_query("UPDATE COUPONS SET COUP_LEFT=COUP_LEFT+$sum WHERE COUP_ID=$coupId") or die(mysql_error());	
+}else{
+	echo "No changes have been made.";
+}
+
+include("close.php");
+?>
+</p>
+</div>
+</div>
+<script>
+window.setTimeout(function(){window.location = "http://sunshine.engr.sjsu.edu/pages/shoppingCart.php?acctId=<?php echo $acctId; ?>";}, 2000);
+</script>
+<?php
+	include '../template/footer.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                  vendorMenu.php                  Page 1
+
+
+<?php
+include '../template/headerPages.php';
+?>
+<div id="content">
+<h1>Vendor Menu</h1>
+<body>
+<form action = "createCoupon.php"><button type="submit">Create Coupon</button></form>
+<form action = "inventory.php"><button type="submit">Coupon Inventory</button></form>
+<form action = "testShoppingCart.php"><button type="submit">Transactions</button></form>
+<form action = "editAccount.php"><button type="submit">Edit Account</button></form>
+</div>
+<?php
+        include '../template/footerPages.php';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-09 09:22                  viewCoupon.php                  Page 1
+
+
+<?php
+        include('../template/header.php');
+?>
+<div id="content">
+<article>
+<?php
+include("connection.php");
+
+$coupId = $_REQUEST['coupId'];
+
+
+$query = "SELECT * FROM COUPONS WHERE COUP_ID = $coupId";
+$result = mysql_query($query) or die(mysql_error());
+$row = mysql_fetch_array($result) or die(mysql_error());
+
+if(0 < $row['COUP_LEFT']){
+	"<p>Title: ".$row['COUP_NAME']."</p>
+	  <p>Total: ".$row['COUP_TOTAL']."</p>
+	  <p>Left: ".$row['COUP_LEFT']."</p>
+	  <p>Price: ".$row['COUP_PRICE']."</p> 
+	  <p>Category: ".$row['COUP_CATNAME']."</p> 
+	  <p>Vendor: ".$row['COUP_VENDOR']."</p> 
+	  <p>Description: ".$row['COUP_DESC']."</p>
+	  <p>Start Date: ".$row['COUP_START']."</p> 
+	  <p>End Date: ".$row['COUP_EXPR']."</p>";
+	'<p><img name="myimage" src="'.$row['COUP_IMGLOC'].'" width="60" height="60" alt="image" /></p>';  
+
+	if(isset($_REQUEST['acctId'])){
+		$acctId = $_REQUEST['acctId'];
+		"<a href='addCart.php?coupId=$coupId&acctId=$acctId'>Add Coupon</a>";
+	}
+}else{
+		"Coupon ".$row['COUP_ID']." is sold out.";
+}
+?>
+<div id="coupon-image" class="crop">
+                <img src="<?php echo $row['COUP_IMGLOC']; ?>" alt="Spa Coupon" />
+            </div>
+            <div id="coupon-description">
+                <h1><?php echo $row['COUP_NAME']; ?></h1>
+                <p><?php echo $row['COUP_DESC']; ?></p>
+	    </div>
+            <div id="coupon-pricing">
+                <h1>$<?php echo $row['COUP_PRICE']; ?></h1>
+		<?php if(isset($_SESSION['current_user']) && $_SESSION['acctType'] != 1){ echo "<a class='button' href='/pages/addCart.php?coupId=$coupId&acctId=".$_SESSION['current_user']."'>Buy</a>"; }else{?>
+                <a class="button" href="/pages/login.php">Buy</a>
+		<?php } ?>
+                <ul>
+                    <li><h3><?php echo $row['COUP_LEFT']; ?></h3>Remain</li>
+                </ul>
+                <h2 id="time">3 days <span>4:15:32</span></h2>
+                <h3>Time Left to Buy</h3>
+		<?php 
+			$tempArray = explode("-",$row['COUP_EXPR']);
+			$dayArray = explode(" ", $tempArray[2]);
+			$timeArray = explode(":", $dayArray[1]); 
+
+
+
+
+
+
+
+2012-05-09 09:22                  viewCoupon.php                  Page 2
+
+
+		?>
+                <script>
+                    $('#time').countdown({date: new Date(<?php echo $tempArray[0]; ?>, <?php echo $tempArray[1]; ?>-1, <?php echo $dayArray[0]; ?>,<?php echo $timeArray[0]; ?>, <?php echo $timeArray[1]; ?>, <?php echo $timeArray[2]; ?>)});
+                </script>
+            </div>
+        <div style="clear:both;"></div>
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'sunshineDeals'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</article>
+<?php include("../template/sponsoredDeals.php");	  
+
+include("close.php");
+?>
+</div>
+<?php
+	include('../template/footer.php');
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

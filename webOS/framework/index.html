@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Sunshine Deals</title>
+	<script type="text/javascript" src="cordova-1.7.0.js"></script>   
+	<script type="text/javascript">
+		// create global var for sqlite database instance
+		var db;
+	</script>	
+	<link rel="stylesheet" type="text/css" href="menu.css">
+	<link href="http://sunshine.engr.sjsu.edu/mobile/style/style.css" rel="stylesheet" type="text/css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+	<script src="http://sunshine.engr.sjsu.edu/mobile/../jquery.countdown1.2.js" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+	function loadLogin()
+	{
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	  {// code for IE7+, Firefox, Chrome, Opera, Safari
+	  xmlhttp=new XMLHttpRequest();
+	  }
+	else
+	  {// code for IE6, IE5
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	xmlhttp.onreadystatechange=function()
+	  {
+	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+	    {
+	    document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+	    }
+	  }
+	xmlhttp.open("GET","http://sunshine.engr.sjsu.edu/mobile/login.php",null);
+	xmlhttp.send();
+	}
+	function loadRegister()
+	{
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	  {// code for IE7+, Firefox, Chrome, Opera, Safari
+	  xmlhttp=new XMLHttpRequest();
+	  }
+	else
+	  {// code for IE6, IE5
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	xmlhttp.onreadystatechange=function()
+	  {
+	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+	    {
+	    document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+	    }
+	  }
+	xmlhttp.open("GET","http://sunshine.engr.sjsu.edu/mobile/register.php",null);
+	xmlhttp.send();
+	}
+	</script>
+	
+</head>
+<body>
+			<center><a href="#"><img src="http://sunshine.engr.sjsu.edu/mobile/../images/logo.png" alt="Sunshine Deals"></a></center>
+			</br>
+			<div id='myDiv'>
+				<center><a href="" class='btn large' onclick="loadLogin()">Login</a></center>		
+				<center><a href="" class="btn large" onclick="loadRegister()">Register</a></center>
+			</div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+c:\users\alben cheung\documents\visual studio 2010\Projects\Sunshine Deals\Sunshine Deals\Bin\Debug\ApplicationIcon.png
+c:\users\alben cheung\documents\visual studio 2010\Projects\Sunshine Deals\Sunshine Deals\Bin\Debug\Background.png
+c:\users\alben cheung\documents\visual studio 2010\Projects\Sunshine Deals\Sunshine Deals\Bin\Debug\Sunshine Deals.dll
+c:\users\alben cheung\documents\visual studio 2010\Projects\Sunshine Deals\Sunshine Deals\Bin\Debug\Sunshine Deals.pdb
+c:\users\alben cheung\documents\visual studio 2010\Projects\Sunshine Deals\Sunshine Deals\Bin\Debug\AppManifest.xaml
+c:\users\alben cheung\documents\visual studio 2010\Projects\Sunshine Deals\Sunshine Deals\Bin\Debug\Sunshine_Deals.xap
+c:\users\alben cheung\documents\visual studio 2010\Projects\Sunshine Deals\Sunshine Deals\Bin\Debug\WP7CordovaClassLib.dll
+c:\users\alben cheung\documents\visual studio 2010\Projects\Sunshine Deals\Sunshine Deals\obj\Debug\ResolveAssemblyReference.cache
+c:\users\alben cheung\documents\visual studio 2010\Projects\Sunshine Deals\Sunshine Deals\obj\Debug\App.g.i.cs
+c:\users\alben cheung\documents\visual studio 2010\Projects\Sunshine Deals\Sunshine Deals\obj\Debug\MainPage.g.i.cs
+c:\users\alben cheung\documents\visual studio 2010\Projects\Sunshine Deals\Sunshine Deals\obj\Debug\Sunshine Deals.g.resources
+c:\users\alben cheung\documents\visual studio 2010\Projects\Sunshine Deals\Sunshine Deals\obj\Debug\Sunshine Deals.dll
+c:\users\alben cheung\documents\visual studio 2010\Projects\Sunshine Deals\Sunshine Deals\obj\Debug\Sunshine Deals.pdb
+c:\users\alben cheung\documents\visual studio 2010\Projects\Sunshine Deals\Sunshine Deals\obj\Debug\XapCacheFile.xml

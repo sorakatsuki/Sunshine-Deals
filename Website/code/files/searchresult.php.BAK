@@ -1,0 +1,108 @@
+<?php
+        include('../template/headerPages.php');
+?>
+<div id="content">
+<div id="cart">
+<?php
+$link = mysql_connect('localhost', 'shinetheweb', 'urmysunshine') or die('Could not connect: ' . mysql_error());
+mysql_select_db('sunshinedeals') or die('Could not select database');
+
+if(!isset($_REQUEST['keyword']))
+	die('<p>Invalid Keyword</p>');
+
+$keyword = trim($_REQUEST['keyword']);
+
+if(strlen($keyword) < 2 )
+	die('<p>Invalid Keyword</p>');
+
+
+$searchquery = "SELECT * FROM COUPONS WHERE LOWER(COUP_NAME) LIKE LOWER('%$keyword%') OR LOWER(COUP_CATNAME) LIKE LOWER('%$keyword%')
+							OR LOWER(COUP_VENDOR) LIKE LOWER('%$keyword%') OR LOWER(COUP_DESC) LIKE LOWER('%$keyword%')";
+
+
+if(isset($_REQUEST['sort']))
+{
+	switch($_REQUEST['sort'])
+	{
+		case 'id':
+			$searchquery .= " ORDER BY COUP_ID";
+			break;
+		case 'title':
+			$searchquery .= " ORDER BY COUP_NAME";
+			break;
+		case 'category':
+			$searchquery .= " ORDER BY COUP_CATNAME";
+			break;
+		case 'desc':
+			$searchquery .= " ORDER BY COUP_DESC";
+			break;
+		case 'price':
+			$searchquery .= " ORDER BY COUP_PRICE";
+			break;
+		case 'left':
+			$searchquery .= " ORDER BY COUP_LEFT";
+			break;
+		default:
+			$searchquery .= " ORDER BY COUP_ID";
+			break;
+	}
+}
+
+
+$row = mysql_fetch_array($result);
+$size = 0;
+
+
+echo"
+<table border='1'>
+<tr align = left>
+<th><a href='searchresult.php?sort=title&acctId=$acctId&keyword=$keyword'>Title</a></th>";
+echo "
+<th><a href='searchresult.php?sort=category&acctId=$acctId&keyword=$keyword'>Category</a></th>
+<th><a href='searchresult.php?sort=desc&acctId=$acctId&keyword=$keyword'>Description</a></th>
+<th><a href='searchresult.php?sort=left&acctId=$acctId&keyword=$keyword'>Left</a></th>
+<th><a href='searchresult.php?sort=price&acctId=$acctId&keyword=$keyword'>Price</a></th>
+<th></th>
+</tr>";
+
+while($row = mysql_fetch_array($result))
+  {
+  if($row['COUP_LEFT']==0){
+
+  }else{
+  $coupId = $row['COUP_ID'];
+  echo "<tr>";
+  if(isset($_SESSION['current_user'])){
+    $coupUrl = "viewCoupon.php?coupId=$coupId";
+  }
+  else{
+    $coupUrl = "viewCoupon.php?coupId=$coupId";
+  }
+  echo '<td><a href="'.$coupUrl.'"><div class="crop"><img name="myimage" src="'.$row['COUP_IMGLOC'].'" width="60" height="60" alt="image" /></div>'.$row['COUP_NAME'].'</a></td>';
+  echo "<td>" . $row['COUP_CATNAME'] . "</td>";
+  echo "<td>" . $row['COUP_DESC'] . "</td>";
+  echo "<td>" . $row['COUP_LEFT'] . "</td>";
+  echo "<td>" . $row['COUP_PRICE'] . "</td>";
+  if(isset($_SESSION['current_user']) && $_SESSION['acctType'] != 1){
+    $url = "addCart.php?coupId=$coupId&acctId=$acctId";
+  }
+  else{
+    $url = "login.php";
+  }
+  echo "<td><a href='". $url ."'>Add</a></td>";
+  echo "</tr>";
+  }
+  }
+
+        echo "</table>";
+?>
+<?php
+	mysql_free_result($result);
+	mysql_close($link);
+?>
+
+</div>
+</div>
+<?php
+include('../template/footerPages.php');
+?>

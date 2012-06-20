@@ -1,0 +1,549 @@
+/*Universal Styles*/
+a{
+    color: #545454;
+    text-decoration: none;
+}
+
+.button{
+    background-color: #00eb76;
+    border: 0px;
+    color: #f8f9ec;
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 5px;
+    padding: 10px 0;
+    text-decoration: none;
+    width: 100%;
+}
+
+.button, .crop, nav li.active, nav a:hover{
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+}
+
+article{
+    float:left;
+    margin-right: 30px;
+    width: 540px;
+}
+
+aside{
+    float: right;
+    width: 330px;
+}
+
+aside h2{
+    border-bottom: 1px solid #545454;
+    margin-bottom: 6px;
+}
+
+aside img{
+    width: 330px;
+}
+
+body{
+    background: #f8f9ee url('../images/background.jpg') repeat top left;
+    color: #545454;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    margin: 30px 0 0 0;
+}
+
+footer{
+    margin: 0 auto 30px;
+    width: 900px;
+}
+
+footer div{
+    overflow: hidden;
+    width: 900px;
+}
+
+footer nav, footer ul{
+    margin: 0 0 0px 0;
+}
+
+h1, h2, h3{
+    margin: 0;
+}
+
+h1{
+    font-size: 24px;
+}
+
+h2{
+    font-size: 18px;
+}
+
+header, #content{
+    width: 900px;
+    margin: 0 auto;
+}
+
+header{
+    border-bottom: 1px solid #545454;
+}
+
+header a {
+    float:left;
+}
+
+li{
+    float:left;
+    list-style:none;
+    padding: 0;
+}
+
+aside, header, #content, #coupon-image, .crop{
+    overflow: hidden;
+}
+
+nav{
+    float:right;
+    margin:105px 0 30px;
+}
+
+nav{
+    overflow: hidden;
+}
+
+nav a:visited{
+    color: #545454;
+}
+
+nav li{
+    padding: 5px 7px;
+}
+
+nav li.active, nav a:hover{
+    background: #e2e3d8;
+}
+
+nav ul{
+    margin: 0;
+    padding: 0px;
+}
+
+nav a:active{
+    color: #545454;
+}
+
+p{
+    font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+    line-height: 150%;
+}
+
+ul{
+    float:right;
+}
+
+#content{
+    border-bottom: 1px solid #545454;
+    margin: 30px auto;
+}
+/*End Universal Styles*/
+
+/*Coupon Page Styles*/
+#coupon-description{
+    float:left;
+    margin: 15px 15px 0 0;
+    width: 320px;
+}
+
+#coupon-description p{
+    margin-top:0px;
+}
+
+#coupon-image{
+    max-height: 540px;
+    width: 540px;
+}
+
+#coupon-image img{
+   margin-bottom: -3px;
+   width: 100%;
+}
+
+#coupon-pricing{
+    float: right;
+    margin-top: 15px;
+    text-align: center;
+    width: 200px;
+}
+
+#coupon-pricing h1{
+    color: #00eb76;
+    font-size: 24px;
+}
+
+#coupon-pricing h3{
+    font-size: 18px;
+}
+
+#coupon-pricing > h3{
+    font-size: 14px;
+    font-weight: normal;
+}
+
+#coupon-pricing li{
+    margin: 0 auto;
+    float: none;
+}
+
+#coupon-pricing ul{
+    margin-top: 15px;
+    padding: 0;
+    width: 100%;
+}
+
+.more-deals{
+    margin-top: 0px;
+    width: 330px;
+}
+
+.more-deals, .more-deals li{
+    width: 330px;
+}
+
+.more-deals li{
+    margin: 0 0 15px;
+}
+
+.more-deals .crop{
+    height: 150px;
+    margin-bottom: 5px;
+    width: 330px;
+}
+
+#sponsored-deal{
+    background: url('../images/beach.jpg');
+    background-position: 0px;
+    -webkit-border-radius: 6px 6px 0 0;
+       -moz-border-radius: 6px 6px 0 0;
+            border-radius: 6px 6px 0 0;
+    color: #f8f9ec;
+    height: 90px;
+    padding: 15px;
+}
+
+#sponsored-deal-link{
+    background: #e2e3d8;
+    border-top: 1px solid #545454;
+    -webkit-border-radius: 0 0 6px 6px;
+       -moz-border-radius: 0 0 6px 6px;
+            border-radius: 0 0 6px 6px;
+    margin-bottom: 20px;
+    padding: 5px 15px;
+    text-align: right;
+}
+
+#sponsored-deal-link a{
+    color: #545454;
+    text-decoration: underline;
+}
+/*End Coupon Page Styles*/
+
+/*About Us Page Styles*/
+#about{
+	margin: 0 auto;
+	width: 330px;
+}
+
+#about h1{
+    color: #fe72a5;
+    margin-bottom: 5px;
+}
+
+#about li{
+    float: none;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+#about p{
+    background: #e2e3d8;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+       -moz-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+            box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+    float: none;
+    margin: 0 auto 30px;
+    overflow: hidden;
+    padding: 15px;
+    width: 300px;
+}
+
+#about input{
+    border: 1px solid #a5a69e;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+       -moz-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+            box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+    color: #545454;
+    font-size: 18px;
+    height: 15px;
+    padding: 10px;
+}
+
+#about input[type=text]{
+    width: 278px;
+}
+
+#about input[type=submit]{
+    background: #FE72A5;
+    border: 0;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
+    color: #f7fff4;
+    float: right;
+    font-size: 18px;
+    font-weight: bold;
+    height: 40px;
+    width: 90px;
+}
+
+/*Contact Us Page Styes*/
+#contact{
+        margin: 0 auto;
+        width: 330px;
+}
+
+#contact h1{
+    color: #fe72a5;
+    margin-bottom: 5px;
+}
+
+#contact li{
+    float: none;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+#contact p{
+    background: #e2e3d8;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+       -moz-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+            box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+    float: none;
+    margin: 0 auto 30px;
+    overflow: hidden;
+    padding: 15px;
+    width: 300px;
+}
+
+#contact input{
+    border: 1px solid #a5a69e;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+       -moz-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+            box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+    color: #545454;
+    font-size: 18px;
+    height: 15px;
+    padding: 10px;
+
+}
+
+#contact input[type=text], #contact.no-margin-input input[type=password]{
+    margin-bottom: -10px;
+    height: 40px;
+    padding: 0px 0 0px 5px;
+    width: 272px;
+}
+
+#contact.small{
+    width: 200px;
+}
+
+#contact.no-margin-input select{
+    margin-top: 20px;
+}
+
+#contact.no-margin-input {
+    width: 500px;
+}
+
+#contact.no-margin-input input[type=text], #contact.no-margin-input input[type=password]{
+    
+    margin: 0px 0 10px 0;
+}
+
+#contact label{
+    margin-bottom: 30px;
+    padding-right: 5px;
+}
+
+#contact input[type=submit]{
+    background: #FE72A5;
+    border: 0;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
+    color: #f7fff4;
+    float: right;
+    font-size: 18px;
+    font-weight: bold;
+    height: 40px;
+    margin: 20px 0 30px;
+    width: 90px;
+}
+
+/*Register Page Styles*/
+#register{
+    margin: 0 auto;
+    width: 330px;
+}
+
+#register h1{
+    color: #fe72a5;
+    margin-bottom: 5px;
+}
+
+#register li{
+    float: none;
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+#register ul{
+    background: #e2e3d8;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+       -moz-box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+            box-shadow: inset 0px 1px 1px 0px #bdbeb6;
+    float: none;
+    margin: 0 auto 30px;
+    overflow: hidden;
+    padding: 15px;
+    width: 300px;
+}
+
+#register input{
+    border: 1px solid #a5a69e;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+       -moz-box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+            box-shadow: inset 0px 1px 0px 0px #e0e0e0, 0px 1px 0px 0px #f7fff4;
+    color: #545454;
+    font-size: 18px;
+    height: 40px;
+}
+
+#register input[type=text], #register input[type=password]{
+    padding-left: 10px;
+    width: 300px;
+}
+
+#register input[type=submit]{
+    background: #FE72A5;
+    border: 0;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
+    color: #f7fff4;
+    float: right;
+    font-size: 18px;
+    font-weight: bold;
+    height: 40px;
+    line-height: 4px;
+    width: 90px;
+}
+
+
+/* Shopping cart styles */
+#cart{
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+#cart a{
+    text-decoration: underline;
+}
+#cart h2{
+    font-size: 22px;
+    margin: 0px 0px 20px 0px;
+}
+#cart table{
+    border: 0px;
+    border-collapse:collapse;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+#cart td{
+    border: 0px;
+    border-bottom: 1px solid #E8E8D3;
+    padding: 5px;
+}
+#cart td:last-child, #cart th:last-child{
+    text-align:right;
+}
+#cart td.deal{
+    line-height: 50px;
+    padding: 5px 0;
+}
+#cart th{
+    border: 0px;
+    text-align: left;
+    padding: 5px;
+}
+#cart tr:last-child td{
+    border-bottom: 0px;
+}
+#cart .button{
+    background-color: #fde540;
+    display: block;
+    float: right;
+    text-align: center;
+    width: 200px;
+}
+#cart .crop, #quantity .crop{
+    float:left;
+    margin: 0px 10px 0px 0px;
+}
+#cart .crop, #cart .crop img, #quantity .crop, #quantity .crop img{
+    height: 50px;
+     width: 50px;
+}
+#cart .crop img{
+    width: auto;
+}
+#cart .quantity{
+    text-align: center;
+}
+#cart .total td{
+    border: 0px;
+}
+
+/* End Shopping cart styles */
+
+/* Quantity page styles */
+
+#quantity{
+    margin: 0 auto 30px;
+    overflow: hidden;
+    width: 365px;
+}
+#quantity h1{
+    color: #FE72A5;
+}
+input.button{
+    float: right;
+    width: 200px;
+}
+/* End Quantity page styles */
